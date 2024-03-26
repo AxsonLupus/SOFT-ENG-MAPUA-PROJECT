@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Changer with Rectangle</title>
+  <style>
+    /* Your CSS styles here */
+  </style>
+</head>
+<body>
+
+  <h1>Dapat Ung Image Magbabago Depende sa location Ver 2</h1>
+
+  <label for="initialFloor">Initial Floor:</label>
+  <select id="initialFloor" onchange="populateInitialLocations()">
+    <option value=" "> </option>
+    <option value="G">Ground Floor</option>
+    <option value="2">Floor 2</option>
+    <option value="3">Floor 3</option>
+    <!-- Add more floors as needed -->
+  </select>
+
+  <label for="initialLocation">Initial Location:</label>
+  <select id="initialLocation">
+    <option value=" "> </option>
+    <!-- Initial location options will be populated dynamically based on floor selection -->
+  </select>
+  
+  <label for="desiredFloor">Desired Floor:</label>
+  <select id="desiredFloor" onchange="populateDesiredLocations()">
+    <option value=" "> </option>
+    <option value="G">Ground Floor</option>
+    <option value="2">Floor 2</option>
+    <option value="3">Floor 3</option>
+    <!-- Add more floors as needed -->
+  </select>
+
+  <label for="desiredLocation">Desired Location:</label>
+  <select id="desiredLocation">
+    <option value=" "> </option>
+    <!-- Desired location options will be populated dynamically based on floor selection -->
+  </select>
+
+  <div id="imageContainer">
+    <div class="rectangle"></div>
+    <img id="displayedImage" src="image/lobby.jpg" alt="Lobby Image">
+  </div>
+  
+  <button onclick="addMoreLocations()">Book Mark</button>
+
+  <script>
+    function populateInitialLocations() {
+      var floor = document.getElementById('initialFloor').value;
+      var initialLocationDropdown = document.getElementById('initialLocation');
+      initialLocationDropdown.innerHTML = ''; // Clear previous options
+      
+      if (floor === 'G') {
+        initialLocationDropdown.innerHTML = `
+<option value="Admin Assist">Admin Assist</option>
+<option value="Admin Office">Admin Office</option>
+<option value="Book Store">Book Store</option>
+<option value="Canteen">Canteen</option>
+<option value="Clinic">Clinic</option>
+<option value="Elevator Lobby">Elevator Lobby</option>
+<option value="Student Lounge 1">Student Lounge 1</option>
+<option value="Student Lounge 2">Student Lounge 2</option>
+<option value="Hallway">Hallway</option>
+<option value="Lobby Area">Lobby Area</option>
+<option value="Orientation Room">Orientation Room</option>
+<option value="Student Council">Student Council</option>
+<option value="SOCIP">SOCIP</option>
+<option value="Registrar">Registrar</option>
+<option value="Treasury">Treasury</option>
+<option value="Waiting Area">Waiting Area</option>
+<option value="Admission">Admission</option>
+<option value="Multi Purpose">Multi Purpose</option>
+<option value="Tech Room">Tech Room</option>
+        `;
+      } else if (floor === '2') {
+        initialLocationDropdown.innerHTML = `
+          <option value=" "> </option>
+          <option value="lobby">Lobby</option>
+          <option value="conference-room">Conference Room</option>
+          <!-- Add more initial location options for Floor 2 as needed -->
+        `;
+      } else if (floor === '3') {
+        initialLocationDropdown.innerHTML = `
+          <option value=" "> </option>
+          <option value="office">Office</option>
+          <option value="meeting-room">Meeting Room</option>
+          <!-- Add more initial location options for Floor 3 as needed -->
+        `;
+      }
+    }
+
+    function populateDesiredLocations() {
+      var floor = document.getElementById('desiredFloor').value;
+      var desiredLocationDropdown = document.getElementById('desiredLocation');
+      desiredLocationDropdown.innerHTML = ''; // Clear previous options
+      
+      if (floor === 'G') {
+        desiredLocationDropdown.innerHTML = `
+<option value="Admin Assist">Admin Assist</option>
+<option value="Admin Office">Admin Office</option>
+<option value="Book Store">Book Store</option>
+<option value="Canteen">Canteen</option>
+<option value="Clinic">Clinic</option>
+<option value="Elevator Lobby">Elevator Lobby</option>
+<option value="Student Lounge 1">Student Lounge 1</option>
+<option value="Student Lounge 2">Student Lounge 2</option>
+<option value="Hallway">Hallway</option>
+<option value="Lobby Area">Lobby Area</option>
+<option value="Orientation Room">Orientation Room</option>
+<option value="Student Council">Student Council</option>
+<option value="SOCIP">SOCIP</option>
+<option value="Registrar">Registrar</option>
+<option value="Treasury">Treasury</option>
+<option value="Waiting Area">Waiting Area</option>
+<option value="Admission">Admission</option>
+<option value="Multi Purpose">Multi Purpose</option>
+<option value="Tech Room">Tech Room</option>
+        `;
+      } else if (floor === '2') {
+        desiredLocationDropdown.innerHTML = `
+          <option value=" "> </option>
+          <option value="lobby">Lobby</option>
+          <option value="conference-room">Conference Room</option>
+          <!-- Add more desired location options for Floor 2 as needed -->
+        `;
+      } else if (floor === '3') {
+        desiredLocationDropdown.innerHTML = `
+          <option value=" "> </option>
+          <option value="office">Office</option>
+          <option value="meeting-room">Meeting Room</option>
+          <!-- Add more desired location options for Floor 3 as needed -->
+        `;
+      }
+    }
+
+    function addMoreLocations() {
+      window.location.href = 'ConBookMark.html';
+    }
+
+    function loadBookmark() {
+      var urlParams = new URLSearchParams(window.location.search);
+      var initialFloor = urlParams.get('initialFloor');
+      var initialLocation = urlParams.get('initial');
+      var desiredFloor = urlParams.get('desiredFloor');
+      var desiredLocation = urlParams.get('desired');
+
+      if (initialFloor && initialLocation && desiredFloor && desiredLocation) {
+        document.getElementById('initialFloor').value = initialFloor;
+        populateInitialLocations();
+        document.getElementById('desiredFloor').value = desiredFloor;
+        populateDesiredLocations();
+        document.getElementById('initialLocation').value = initialLocation;
+        document.getElementById('desiredLocation').value = desiredLocation;
+      }
+    }
+	
+
+    window.addEventListener('load', loadBookmark);
+  </script>
+
+</body>
+</html>

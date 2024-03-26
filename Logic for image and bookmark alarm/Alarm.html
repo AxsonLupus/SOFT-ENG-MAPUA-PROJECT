@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alarm Page</title>
+  <style>
+    .alarm-container {
+      max-width: 600px;
+      margin: 20px auto;
+    }
+
+    #alarms-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .alarm-item {
+      margin-bottom: 10px;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      padding: 5px;
+    }
+
+    .delete-button {
+      margin-left: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="alarm-container">
+    <h1>Alarm Page</h1>
+
+    <form id="alarmForm">
+      <label for="initialFloor">Initial Floor:</label>
+      <select id="initialFloorAlarm" onchange="populateInitialLocations()">
+        <option value=" "> </option>
+        <option value="G">Ground Floor</option>
+        <option value="2">2nd Floor</option>
+        <option value="3">3rd Floor</option>
+        <!-- Add more floors if needed -->
+      </select>
+
+      <label for="initialLocation">Initial Location:</label>
+      <select id="initialLocationAlarm">
+        <option value=" "> </option>
+        <!-- Initial location options will be populated dynamically based on floor selection -->
+      </select>
+
+      <label for="desiredFloor">Desired Floor:</label>
+      <select id="desiredFloorAlarm" onchange="populateDesiredLocations()">
+        <option value=" "> </option>
+        <option value="G">Ground Floor</option>
+        <option value="2">2nd Floor</option>
+        <option value="3">3rd Floor</option>
+        <!-- Add more floors if needed -->
+      </select>
+
+      <label for="desiredLocation">Desired Location:</label>
+      <select id="desiredLocationAlarm">
+        <option value=" "> </option>
+        <!-- Desired location options will be populated dynamically based on floor selection -->
+      </select>
+
+      <label for="alarmTime">Alarm Time:</label>
+      <input type="time" id="alarmTime" required>
+
+      <fieldset>
+        <legend>Select Days:</legend>
+        <label><input type="checkbox" name="day" value="Monday"> Monday</label>
+        <label><input type="checkbox" name="day" value="Tuesday"> Tuesday</label>
+        <label><input type="checkbox" name="day" value="Wednesday"> Wednesday</label>
+        <label><input type="checkbox" name="day" value="Thursday"> Thursday</label>
+        <label><input type="checkbox" name="day" value="Friday"> Friday</label>
+        <label><input type="checkbox" name="day" value="Saturday"> Saturday</label>
+        <label><input type="checkbox" name="day" value="Sunday"> Sunday</label>
+      </fieldset>
+
+      <button type="button" onclick="setAlarm()">Set Alarm</button>
+    </form>
+
+    <ul id="alarms-list" onclick="loadAlarm(event)"></ul>
+
+    <button onclick="backToMainPage()">Back to Main Page</button>
+  </div>
+
+  <!-- Add audio element for alarm sound -->
+  <audio id="alarmSound" loop>
+    <source src="sound/alarm1.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    function populateInitialLocations() {
+      // Placeholder for populating initial locations based on selected floor
+      var floor = document.getElementById('initialFloorAlarm').value;
+      var initialLocationDropdown = document.getElementById('initialLocationAlarm');
+      initialLocationDropdown.innerHTML = '';
+
+      if (floor === 'G') {
+        initialLocationDropdown.innerHTML = `
+          <option value=""> </option>
+          <option value="Admin Assist">Admin Assist</option>
+          <option value="Admin Office">Admin Office</option>
+          <!-- Add more locations for Ground Floor as needed -->
+        `;
+      } else if (floor === '2') {
+        initialLocationDropdown.innerHTML = `
+          <option value=" "> </option>
+          <option value="Conference Room">Conference Room</option>
+          <!-- Add more locations for Floor 2 as needed -->
+        `;
+      } else if (floor === '3') {
+        initialLocationDropdown.innerHTML = `
+          <option value=" "> Technical Section </option>
+          <option value=" "> Dry Pantry </option>
+          <!-- Add more locations for Floor 3 as needed -->
+        `;
+      } else if (floor === '4') {
+        initialLocationDropdown.innerHTML = `
+          <option value=" "> </option>
+          <option value="Conference Room">Conference Room</option>
+          <!-- Add more locations for Floor 4 as needed -->
+        `;
+      }
+    }
+
+    function populateDesiredLocations() {
+      // Placeholder for populating desired locations based on selected floor
+      var floor = document.getElementById('desiredFloorAlarm').value;
+      var desiredLocationDropdown = document.getElementById('desiredLocationAlarm');
+      desiredLocationDropdown.innerHTML = ''; // Clear previous options
+
+      if (floor === 'G') {
+        desiredLocationDropdown.innerHTML = `
+          <option value=""> </option>
+          <option value="Admin Assist">Admin Assist</option>
+          <option value="Admin Office">Admin Office</option>
+          <!-- Add more locations for Ground Floor as needed -->
+        `;
+      } else if (floor === '2') {
+        desiredLocationDropdown.innerHTML = `
+          <option value=" "> </option>
+          <option value="Conference Room">Conference Room</option>
+          <!-- Add more locations for Floor 2 as needed -->
+        `;
+      } else if (floor === '3') {
+        desiredLocationDropdown.innerHTML = `
+          <option value=" "> Technical Section </option>
+          <option value=" "> Dry Pantry </option>
+          <!-- Add more locations for Floor 3 as needed -->
+        `;
+      } else if (floor === '4') {
+        desiredLocationDropdown.innerHTML = `
+          <option value=" "> </option>
+          <option value="Conference Room">Conference Room</option>
+          <!-- Add more locations for Floor 4 as needed -->
+        `;
+      }
+    }
+
+    function setAlarm() {
+      // Your existing setAlarm() function code..
+      var initialFloor = document.getElementById('initialFloorAlarm').value;
+      var initialLocation = document.getElementById('initialLocationAlarm').value;
+      var desiredFloor = document.getElementById('desiredFloorAlarm').value;
+      var desiredLocation = document.getElementById('desiredLocationAlarm').value;
+      var alarmTime = document.getElementById('alarmTime').value;
+      var selectedDays = [];
+      document.querySelectorAll('input[name="day"]:checked').forEach(function(checkbox) {
+        selectedDays.push(checkbox.value);
+      });
+
+      if (initialFloor.trim() === '' || initialLocation.trim() === '' || desiredFloor.trim() === '' || desiredLocation.trim() === '' || alarmTime.trim() === '' || selectedDays.length === 0) {
+        alert('Please fill all fields and select at least one day for the alarm.');
+        return;
+      }
+
+      var currentTime = new Date();
+      var alarmTimeParts = alarmTime.split(':');
+      var alarmDateTime = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), alarmTimeParts[0], alarmTimeParts[1]);
+
+      var timeUntilAlarm = alarmDateTime - currentTime;
+      if (timeUntilAlarm < 0) {
+        alert('Please choose a future time for the alarm.');
+        return;
+      }
+
+      var alarmItem = document.createElement('li');
+      alarmItem.classList.add('alarm-item');
+      alarmItem.textContent = `${initialFloor} Floor, ${initialLocation} to ${desiredFloor} Floor, ${desiredLocation} - Alarm at ${alarmTime}, Days: ${selectedDays.join(', ')}`;
+
+      alarmItem.setAttribute('data-initial-floor', initialFloor);
+      alarmItem.setAttribute('data-initial', initialLocation);
+      alarmItem.setAttribute('data-desired-floor', desiredFloor);
+      alarmItem.setAttribute('data-desired', desiredLocation);
+      alarmItem.setAttribute('data-time', alarmTime);
+      alarmItem.setAttribute('data-days', JSON.stringify(selectedDays)); // Store selected days
+
+      var deleteButton = document.createElement('button');
+      deleteButton.classList.add('delete-button');
+      deleteButton.textContent = 'X';
+      deleteButton.onclick = function() {
+        alarmItem.remove();
+        saveAlarms();
+      };
+
+      alarmItem.appendChild(deleteButton);
+
+      document.getElementById('alarms-list').appendChild(alarmItem);
+
+      // Schedule playing the alarm sound
+      setTimeout(function() {
+        var currentDay = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+        if (selectedDays.includes(currentDay)) {
+          var audio = document.getElementById('alarmSound');
+          audio.play();
+          alert('Alarm activated!');
+
+          // Add event listener to stop audio when the OK button in the alert is clicked
+          window.addEventListener('click', function() {
+            audio.pause();
+          });
+        }
+      }, timeUntilAlarm);
+
+      saveAlarms();
+
+      // Clear form fields and checkboxes
+      document.getElementById('initialFloorAlarm').value = '';
+      document.getElementById('initialLocationAlarm').value = '';
+      document.getElementById('desiredFloorAlarm').value = '';
+      document.getElementById('desiredLocationAlarm').value = '';
+      document.getElementById('alarmTime').value = '';
+      document.querySelectorAll('input[name="day"]:checked').forEach(function(checkbox) {
+        checkbox.checked = false;
+      });
+    }
+
+    function saveAlarms() {
+      var alarms = document.querySelectorAll('.alarm-item');
+      var alarmsData = [];
+
+      alarms.forEach(function(alarm) {
+        var days = JSON.parse(alarm.getAttribute('data-days')); // Parse stored days
+        var daysString = days.join(', '); // Convert array of days to a comma-separated string
+        alarmsData.push({
+          initialFloor: alarm.getAttribute('data-initial-floor'),
+          initial: alarm.getAttribute('data-initial'),
+          desiredFloor: alarm.getAttribute('data-desired-floor'),
+          desired: alarm.getAttribute('data-desired'),
+          time: alarm.getAttribute('data-time'),
+          days: daysString // Store selected days as a string
+        });
+      });
+
+      localStorage.setItem('alarms', JSON.stringify(alarmsData));
+    }
+
+    function loadAlarm(event) {
+      // Your existing loadAlarm() function code...
+	   if (event.target.classList.contains('alarm-item') || event.target.classList.contains('delete-button')) {
+        if (!event.target.classList.contains('delete-button')) {
+          var initialFloor = event.target.getAttribute('data-initial-floor');
+          var initialLocation = event.target.getAttribute('data-initial');
+          var desiredFloor = event.target.getAttribute('data-desired-floor');
+          var desiredLocation = event.target.getAttribute('data-desired');
+          var time = event.target.getAttribute('data-time');
+          var days = JSON.parse(event.target.getAttribute('data-days')); // Parse stored days
+
+          alert(`Alarm set from ${initialFloor} Floor, ${initialLocation} to ${desiredFloor} Floor, ${desiredLocation} at ${time}, Days: ${days.join(', ')}`);
+        }
+      }
+    }
+
+    function backToMainPage() {
+      window.location.href = 'Main Page.html';
+    }
+
+    window.addEventListener('load', loadAlarms);
+  </script>
+
+</body>
+</html>
