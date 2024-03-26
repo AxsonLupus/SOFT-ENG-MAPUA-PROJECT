@@ -347,7 +347,7 @@
     }
 
     function setAlarm() {
-      // Your existing setAlarm() function code..
+
       var initialFloor = document.getElementById('initialFloorAlarm').value;
       var initialLocation = document.getElementById('initialLocationAlarm').value;
       var desiredFloor = document.getElementById('desiredFloorAlarm').value;
@@ -445,7 +445,7 @@
     }
 
     function loadAlarm(event) {
-      // Your existing loadAlarm() function code...
+
 	   if (event.target.classList.contains('alarm-item') || event.target.classList.contains('delete-button')) {
         if (!event.target.classList.contains('delete-button')) {
           var initialFloor = event.target.getAttribute('data-initial-floor');
