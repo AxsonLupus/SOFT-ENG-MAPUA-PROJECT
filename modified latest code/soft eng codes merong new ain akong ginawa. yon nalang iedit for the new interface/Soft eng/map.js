@@ -81,8 +81,8 @@ class Graph {
   
   function findShortestPath() {
 
-    startVertex = document.getElementById('initial').value;
-    endVertex = document.getElementById('final').value;
+    startVertex = document.getElementById('initialLocationBookmark').value;
+    endVertex = document.getElementById('desiredLocationBookmark').value;
     var backgroundImage = new Image();
     backgroundImage.src = "floor1.jpg"; 
 
