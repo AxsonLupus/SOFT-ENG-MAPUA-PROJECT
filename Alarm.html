@@ -507,70 +507,8 @@ if (selectedDays.includes(currentDay)) {
     });
 }
 
-//--------------------------------------------------------------------------------------------------------
 
-function checkConditionsAndShowPopup() {
-    var audio = document.getElementById('alarmSound');
-    var clickedOnScreen = false;
-
-    if (!audio.paused && clickedOnScreen) {
-        // Show popup message
-        alert('Alarm activated');
-    }
-}
-
-
-
-function triggerAlarm() {
-    var initialFloor = document.getElementById("initialFloorInput").value;
-    var initialLocation = document.getElementById("initialLocationInput").value;
-    var finalFloor = document.getElementById("finalFloorInput").value;
-    var finalLocation = document.getElementById("finalLocationInput").value;
-
-    var url = `Main Page.html?initialFloor=${initialFloor}&initialLocation=${initialLocation}&finalFloor=${finalFloor}&finalLocation=${finalLocation}`;
-
-    window.location.href = url;
-}
-
-
-function monitorAlarmConditions() {
-    // Assuming you have variables condition1Met and condition2Met that track the two conditions
-
-    if (condition1Met && condition2Met) {
-        transferData();
-    }
-}
-
-// Transfer data from local storage to main page
-function transferData() {
-    var savedData = JSON.parse(localStorage.getItem('savedData'));
-
-    // Transfer data to main page 
-    document.getElementById('initialFloor').value = savedData.initialFloor;
-    document.getElementById('initialLocation').value = savedData.initialLocation;
-    document.getElementById('desiredFloor').value = savedData.desiredFloor;
-    document.getElementById('desiredLocation').value = savedData.desiredLocation;
-
-    // Automatically fill dropdown boxes with saved data
-    document.getElementById('initialFloorDropdown').value = savedData.initialFloor;
-    document.getElementById('initialLocationDropdown').value = savedData.initialLocation;
-    document.getElementById('desiredFloorDropdown').value = savedData.desiredFloor;
-    document.getElementById('desiredLocationDropdown').value = savedData.desiredLocation;
-}
-
-monitorAlarmConditions();
-
-
-	function conditionTransfer(){
-		if(condition1 && contiion2)
 	
-	}
-
-
-
-
-//--------------------------------------------------------------------------------------------------------
-
     function saveAlarms() {
       var alarms = document.querySelectorAll('.alarm-item');
       var alarmsData = [];
