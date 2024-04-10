@@ -1,51 +1,89 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Changer with Rectangle</title>
+  <style>
+    /* Your CSS styles here */
+  </style>
+</head>
+<body>
 
-<html>
-	<head>
-		<title>MAPúa</title>
-		<link rel="shortcut icon" type="image/png" href="images\MAPúa-logo.png">
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<meta name="description" content="" />
-		<meta name="keywords" content="" />
-		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
-		<script src="js/jquery.min.js"></script>
-		<script src="js/jquery.dropotron.min.js"></script>
-		<script src="js/jquery.scrollgress.min.js"></script>
-		<script src="js/jquery.scrolly.min.js"></script>
-		<script src="js/jquery.slidertron.min.js"></script>
-		<script src="js/skel.min.js"></script>
-		<script src="js/skel-layers.min.js"></script>
-		<script src="js/init.js"></script>
-		<script>
+  <h1>Logic lang po toh for the main page</h1>
+
+  <label for="initialFloor">Initial Floor:</label>
+  <select id="initialFloor" onchange="populateInitialLocations()">
+    <option value=" "> </option>
+        <option value="G">Ground Floor</option>
+        <option value="2">Floor 2</option>
+        <option value="3">Floor 3</option>
+		<option value="4">Floor 4</option>
+        <option value="5">Floor 5</option>
+		<option value="6">Floor 6</option>
+  </select>
+
+  <label for="initialLocation">Initial Location:</label>
+  <select id="initialLocation">
+    <option value=" "> </option>
+    <!-- Initial location options will be populated dynamically based on floor selection -->
+  </select>
+  
+  <label for="desiredFloor">Desired Floor:</label>
+  <select id="desiredFloor" onchange="populateDesiredLocations()">
+    <option value=" "> </option>
+        <option value="G">Ground Floor</option>
+        <option value="2">Floor 2</option>
+        <option value="3">Floor 3</option>
+		<option value="4">Floor 4</option>
+        <option value="5">Floor 5</option>
+		<option value="6">Floor 6</option>
+  </select>
+
+  <label for="desiredLocation">Desired Location:</label>
+  <select id="desiredLocation">
+    <option value=" "> </option>
+    <!-- Desired location options will be populated dynamically based on floor selection -->
+  </select>
+
+  <div id="imageContainer">
+    <div class="rectangle"></div>
+    <img id="displayedImage" src="image/lobby.jpg" alt="Lobby Image">
+  </div>
+  
+  <button onclick="addMoreLocations()">Book Mark</button>
+
+  <script>
     function populateInitialLocations() {
-      var floor = document.getElementById('initialFloorBookmark').value;
-      var initialLocationDropdown = document.getElementById('initialLocationBookmark');
-      initialLocationDropdown.innerHTML = '';
+      var floor = document.getElementById('initialFloor').value;
+      var initialLocationDropdown = document.getElementById('initialLocation');
+      initialLocationDropdown.innerHTML = ''; // Clear previous options
       
       if (floor === 'G') {
         initialLocationDropdown.innerHTML = `
-          <option value=""> </option>
-          <option value="Admin Assist">Admin Assist</option>
-          <option value="Admin Office">Admin Office</option>
-          <option value="Book Store">Book Store</option>
-          <option value="Canteen">Canteen</option>
-          <option value="Clinic">Clinic</option>
-          <option value="Elevator Lobby">Elevator Lobby</option>
-          <option value="Student Lounge 1">Student Lounge 1</option>
-          <option value="Student Lounge 2">Student Lounge 2</option>
-          <option value="Hallway">Hallway</option>
-          <option value="Lobby Area">Lobby Area</option>
-          <option value="Orientation Room">Orientation Room</option>
-          <option value="Student Council">Student Council</option>
-          <option value="SOCIP">SOCIP</option>
-          <option value="Registrar">Registrar</option>
-          <option value="Treasury">Treasury</option>
-          <option value="Waiting Area">Waiting Area</option>
-          <option value="Admission">Admission</option>
-          <option value="Multi Purpose">Multi Purpose</option>
-          <option value="Tech Room">Tech Room</option>
+		          <option value=""> </option>
+<option value="Admin Assist">Admin Assist</option>
+<option value="Admin Office">Admin Office</option>
+<option value="Book Store">Book Store</option>
+<option value="Canteen">Canteen</option>
+<option value="Clinic">Clinic</option>
+<option value="Elevator Lobby">Elevator Lobby</option>
+<option value="Student Lounge 1">Student Lounge 1</option>
+<option value="Student Lounge 2">Student Lounge 2</option>
+<option value="Hallway">Hallway</option>
+<option value="Lobby Area">Lobby Area</option>
+<option value="Orientation Room">Orientation Room</option>
+<option value="Student Council">Student Council</option>
+<option value="SOCIP">SOCIP</option>
+<option value="Registrar">Registrar</option>
+<option value="Treasury">Treasury</option>
+<option value="Waiting Area">Waiting Area</option>
+<option value="Admission">Admission</option>
+<option value="Multi Purpose">Multi Purpose</option>
+<option value="Tech Room">Tech Room</option>
         `;
-	
+		 document.getElementById('displayedImage').src = "images/pic1.png"; // Change image source
+
       } else if (floor === '2') {
         initialLocationDropdown.innerHTML = `
           <option value=" "> </option>
@@ -74,9 +112,13 @@
 		  <option value="Lecture Room 222  ">Lecture Room 222 </option>
 		  <option value="Lecture Room 223  ">Lecture Room 223 </option>
 		  <option value=" "> </option>
+          
         `;
+		
+		document.getElementById('displayedImage').src = "image/ground_floor.jpg";
       } else if (floor === '3') {
         initialLocationDropdown.innerHTML = `
+          <option value=" "> </option>
           <option value="Technical Section "> Technical Section </option>
           <option value=" Dry Pantry"> Dry Pantry </option>
           <option value="GSR-2 "> GSR-2 </option>
@@ -113,7 +155,8 @@
           <option value="Lecture Room 324 "> Lecture Room 324</option>
           <option value="Lecture Room 325 "> Lecture Room 325</option>
         `;
-      } else if (floor === '4') {
+		document.getElementById('displayedImage').src = "images/pic2.png";
+      }else if (floor === '4') {
         initialLocationDropdown.innerHTML = `
           <option value=" "> </option>
           <option value="Elevator Lobby ">Elevator Lobby</option>
@@ -134,10 +177,8 @@
 		  <option value="ILMO STO ">ILMO STO </option>
 		  <option value="Roof Deck ">Roof Deck </option>
 		  <option value=" "> </option>
-		  
-		  
         `;
-      } else if (floor === '5') {
+      }else if (floor === '5') {
         initialLocationDropdown.innerHTML = `
           <option value=" "> </option>
 		  <option value="Elevator Lobby ">Elevator Lobby </option>
@@ -157,7 +198,7 @@
 			<option value="Photography Studio 511 ">Photography Studio 511 </option>
 		  <option value=" "> </option>
         `;
-      }  else if (floor === '6') {
+      } else if (floor === '6') {
         initialLocationDropdown.innerHTML = `
           <option value=" "> </option>
           <option value="Elevator Lobby ">Elevator Lobby </option>
@@ -177,39 +218,36 @@
 		  <option value="ETYSBM ">ETYSBM </option>
           <option value="SLHS ">SLHS </option>
 		  <option value="Transient Office ">Transient Office </option>
-
         `;
       } 
     }
-	
 
     function populateDesiredLocations() {
-      var floor = document.getElementById('desiredFloorBookmark').value;
-      var desiredLocationDropdown = document.getElementById('desiredLocationBookmark');
+      var floor = document.getElementById('desiredFloor').value;
+      var desiredLocationDropdown = document.getElementById('desiredLocation');
       desiredLocationDropdown.innerHTML = ''; // Clear previous options
       
       if (floor === 'G') {
         desiredLocationDropdown.innerHTML = `
-         <option value=""> </option>
-          <option value="Admin Assist">Admin Assist</option>
-          <option value="Admin Office">Admin Office</option>
-          <option value="Book Store">Book Store</option>
-          <option value="Canteen">Canteen</option>
-          <option value="Clinic">Clinic</option>
-          <option value="Elevator Lobby">Elevator Lobby</option>
-          <option value="Student Lounge 1">Student Lounge 1</option>
-          <option value="Student Lounge 2">Student Lounge 2</option>
-          <option value="Hallway">Hallway</option>
-          <option value="Lobby Area">Lobby Area</option>
-          <option value="Orientation Room">Orientation Room</option>
-          <option value="Student Council">Student Council</option>
-          <option value="SOCIP">SOCIP</option>
-          <option value="Registrar">Registrar</option>
-          <option value="Treasury">Treasury</option>
-          <option value="Waiting Area">Waiting Area</option>
-          <option value="Admission">Admission</option>
-          <option value="Multi Purpose">Multi Purpose</option>
-          <option value="Tech Room">Tech Room</option>
+<option value="Admin Assist">Admin Assist</option>
+<option value="Admin Office">Admin Office</option>
+<option value="Book Store">Book Store</option>
+<option value="Canteen">Canteen</option>
+<option value="Clinic">Clinic</option>
+<option value="Elevator Lobby">Elevator Lobby</option>
+<option value="Student Lounge 1">Student Lounge 1</option>
+<option value="Student Lounge 2">Student Lounge 2</option>
+<option value="Hallway">Hallway</option>
+<option value="Lobby Area">Lobby Area</option>
+<option value="Orientation Room">Orientation Room</option>
+<option value="Student Council">Student Council</option>
+<option value="SOCIP">SOCIP</option>
+<option value="Registrar">Registrar</option>
+<option value="Treasury">Treasury</option>
+<option value="Waiting Area">Waiting Area</option>
+<option value="Admission">Admission</option>
+<option value="Multi Purpose">Multi Purpose</option>
+<option value="Tech Room">Tech Room</option>
         `;
       } else if (floor === '2') {
         desiredLocationDropdown.innerHTML = `
@@ -278,8 +316,9 @@
           <option value="Lecture Room 324 "> Lecture Room 324</option>
           <option value="Lecture Room 325 "> Lecture Room 325</option>
         `;
-      } else if (floor === '4') {
+      }else if (floor === '4') {
         desiredLocationDropdown.innerHTML = `
+          <option value=" "> </option>
           <option value=" "> </option>
           <option value="Elevator Lobby ">Elevator Lobby</option>
           <option value="PC Hardware Lan 401 ">PC Hardware Lan 401 </option>
@@ -298,9 +337,8 @@
 		  <option value="ILMO ">ILMO </option>
 		  <option value="ILMO STO ">ILMO STO </option>
 		  <option value="Roof Deck ">Roof Deck </option>
-		  <option value=" "> </option>
         `;
-      } else if (floor === '5') {
+      }else if (floor === '5') {
         desiredLocationDropdown.innerHTML = `
           <option value=" "> </option>
 		  <option value="Elevator Lobby ">Elevator Lobby </option>
@@ -340,113 +378,15 @@
 		  <option value="ETYSBM ">ETYSBM </option>
           <option value="SLHS ">SLHS </option>
 		  <option value="Transient Office ">Transient Office </option>
-
         `;
       } 
-	  
     }
 
-    function saveBookmark() {
-      var initialFloor = document.getElementById('initialFloorBookmark').value;
-      var initialLocation = document.getElementById('initialLocationBookmark').value;
-      var desiredFloor = document.getElementById('desiredFloorBookmark').value;
-      var desiredLocation = document.getElementById('desiredLocationBookmark').value;
-      var message = document.getElementById('messageBookmark').value;
-      
-      if (initialFloor.trim() === '' || initialLocation.trim() === '' || desiredFloor.trim() === '' || desiredLocation.trim() === '') {
-        alert('Please select both initial and desired locations along with their floors.');
-        return;
-      }
-      
-      var bookmarkItem = document.createElement('li');
-      bookmarkItem.classList.add('bookmark-item');
-      bookmarkItem.textContent = `${initialFloor} Floor, ${initialLocation} to ${desiredFloor} Floor, ${desiredLocation} - ${message}`;
-
-      bookmarkItem.setAttribute('data-initial-floor', initialFloor);
-      bookmarkItem.setAttribute('data-initial', initialLocation);
-      bookmarkItem.setAttribute('data-desired-floor', desiredFloor);
-      bookmarkItem.setAttribute('data-desired', desiredLocation);
-      bookmarkItem.setAttribute('data-message', message || '');
-
-      var deleteButton = document.createElement('button');
-      deleteButton.classList.add('delete-button');
-      deleteButton.textContent = 'X';
-      deleteButton.onclick = function() {
-        bookmarkItem.remove();
-        saveBookmarks();
-      };
-
-      bookmarkItem.appendChild(deleteButton);
-
-      bookmarkItem.onclick = function() {
-        var initialFloor = bookmarkItem.getAttribute('data-initial-floor');
-        var initialLocation = bookmarkItem.getAttribute('data-initial');
-        var desiredFloor = bookmarkItem.getAttribute('data-desired-floor');
-        var desiredLocation = bookmarkItem.getAttribute('data-desired');
-        var message = bookmarkItem.getAttribute('data-message');
-
-        var url = `Main Page.html?initialFloor=${initialFloor}&initial=${initialLocation}&desiredFloor=${desiredFloor}&desired=${desiredLocation}&message=${message}`;
-        window.location.href = url;
-      };
-
-      document.getElementById('bookmarks-list').appendChild(bookmarkItem);
-
-      saveBookmarks();
-
-      document.getElementById('initialFloorBookmark').value = '';
-      document.getElementById('initialLocationBookmark').value = '';
-      document.getElementById('desiredFloorBookmark').value = '';
-      document.getElementById('desiredLocationBookmark').value = '';
-      document.getElementById('messageBookmark').value = ''; // Clearing message field
+    function addMoreLocations() {
+      window.location.href = 'ConBookMark.html';
     }
 
-    function saveBookmarks() {
-      var bookmarks = document.querySelectorAll('.bookmark-item');
-      var bookmarksData = [];
-
-      bookmarks.forEach(function(bookmark) {
-        bookmarksData.push({
-          initialFloor: bookmark.getAttribute('data-initial-floor'),
-          initial: bookmark.getAttribute('data-initial'),
-          desiredFloor: bookmark.getAttribute('data-desired-floor'),
-          desired: bookmark.getAttribute('data-desired'),
-          message: bookmark.getAttribute('data-message')
-        });
-      });
-
-      localStorage.setItem('bookmarks', JSON.stringify(bookmarksData));
-    }
-
-    function loadBookmarks() {
-      var bookmarksData = localStorage.getItem('bookmarks');
-
-      if (bookmarksData) {
-        bookmarksData = JSON.parse(bookmarksData);
-
-        bookmarksData.forEach(function(bookmarkData) {
-          var bookmarkItem = document.createElement('li');
-          bookmarkItem.classList.add('bookmark-item');
-          bookmarkItem.textContent = `${bookmarkData.initialFloor} Floor, ${bookmarkData.initial} to ${bookmarkData.desiredFloor} Floor, ${bookmarkData.desired} - ${bookmarkData.message || ''}`;
-
-          bookmarkItem.setAttribute('data-initial-floor', bookmarkData.initialFloor);
-          bookmarkItem.setAttribute('data-initial', bookmarkData.initial);
-          bookmarkItem.setAttribute('data-desired-floor', bookmarkData.desiredFloor);
-          bookmarkItem.setAttribute('data-desired', bookmarkData.desired);
-          bookmarkItem.setAttribute('data-message', bookmarkData.message || '');
-
-          var deleteButton = document.createElement('button');
-          deleteButton.classList.add('delete-button');
-          deleteButton.textContent = 'X';
-          deleteButton.onclick = function() {
-            bookmarkItem.remove();
-            saveBookmarks();
-          };
-
-          bookmarkItem.appendChild(deleteButton);
-          document.getElementById('bookmarks-list').appendChild(bookmarkItem);
-        });
-      }
-
+    function loadBookmark() {
       var urlParams = new URLSearchParams(window.location.search);
       var initialFloor = urlParams.get('initialFloor');
       var initialLocation = urlParams.get('initial');
@@ -454,146 +394,18 @@
       var desiredLocation = urlParams.get('desired');
 
       if (initialFloor && initialLocation && desiredFloor && desiredLocation) {
-        document.getElementById('initialFloorBookmark').value = initialFloor;
-        document.getElementById('desiredFloorBookmark').value = desiredFloor;
+        document.getElementById('initialFloor').value = initialFloor;
         populateInitialLocations();
+        document.getElementById('desiredFloor').value = desiredFloor;
         populateDesiredLocations();
-        document.getElementById('initialLocationBookmark').value = initialLocation;
-        document.getElementById('desiredLocationBookmark').value = desiredLocation;
+        document.getElementById('initialLocation').value = initialLocation;
+        document.getElementById('desiredLocation').value = desiredLocation;
       }
     }
+	
 
-    function loadBookmark(event) {
-      if (event.target.classList.contains('bookmark-item') || event.target.classList.contains('delete-button')) {
-        if (!event.target.classList.contains('delete-button')) {
-          var initialFloor = event.target.getAttribute('data-initial-floor');
-          var initialLocation = event.target.getAttribute('data-initial');
-          var desiredFloor = event.target.getAttribute('data-desired-floor');
-          var desiredLocation = event.target.getAttribute('data-desired');
-          var message = event.target.getAttribute('data-message');
-
-          var url = `Main Page.html?initialFloor=${initialFloor}&initial=${initialLocation}&desiredFloor=${desiredFloor}&desired=${desiredLocation}&message=${message}`;
-          window.location.href = url;        
-        }
-      }
-    }
-
-    function backToMainPage() {
-      window.location.href = 'Main Page.html';
-    }
-
-    window.addEventListener('load', loadBookmarks);
+    window.addEventListener('load', loadBookmark);
   </script>
-		<noscript>
-			<link rel="stylesheet" href="css/skel.css" />
-			<link rel="stylesheet" href="css/style.css" />
-			<link rel="stylesheet" href="css/style-xlarge.css" />
-		</noscript>
-		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
-		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
-		<style>
-			.select-container {
-				display: flex;
-				justify-content: space-between;
-				margin-bottom: 15px;
-			}
-			.select-label {
-				width: 150px;
-				text-align: right;
-				padding-right: 10px;
-				margin-top: 6px;
-			}
-			.select-dropdown {
-				flex: 1;
-			}
-		</style>
-	</head>
-	<body class="landing">
 
-		<!-- Header -->
-		<header id="header" class="skel-layers-fixed">
-			<a href="main.html"><img src="images\MAPúa-logo.png" style="height: 45px; text-decoration: none;"/></a>	
-			<nav id="nav">
-				<ul>
-					<li><a href="new main.html">Home</a></li>
-					<li><a href="bookmarks.html">Bookmarks</a></li>
-					<li><a href="time.html">Time</a></li>
-				</ul>
-			</nav>
-		</header>
-
-		<!-- Banner -->
-		<section id="banner">
-			<div class="inner">
-				<h2>BOOKMARKS</h2>
-			</div>
-		</section>		
-
-		<!-- Main -->
-		<section id="one" class="wrapper style1">
-			<div class="container">
-				<div class="select-container">
-					
-					<div class="select-dropdown">
-						<div>
-        <label for="initialFloorBookmark">Select Initial Floor:</label>
-        <select id="initialFloorBookmark" onchange="populateInitialLocations()">
-            <option value="G">Ground Floor</option>
-            <option value="2">Floor 2</option>
-            <option value="3">Floor 3</option>
-            <option value="4">Floor 4</option>
-            <option value="5">Floor 5</option>
-            <option value="6">Floor 6</option>
-        </select>
-    </div>
-    <div>
-        <label for="initialLocationBookmark">Initial Location:</label>
-        <select id="initialLocationBookmark"></select>
-    </div>
-
-    <div>
-        <label for="desiredFloorBookmark">Select Desired Floor:</label>
-        <select id="desiredFloorBookmark" onchange="populateDesiredLocations()">
-            <option value="G">Ground Floor</option>
-            <option value="2">Floor 2</option>
-            <option value="3">Floor 3</option>
-            <option value="4">Floor 4</option>
-            <option value="5">Floor 5</option>
-            <option value="6">Floor 6</option>
-        </select>
-    </div>
-    <div>
-        <label for="desiredLocationBookmark">Desired Location:</label>
-        <select id="desiredLocationBookmark"></select>
-    
-	</div> 
-	<div style="margin-top: 20px;">
-				<button type="button" class="butn" onclick="saveBookmark()">+</button>
-				<button class="butn" onclick="findShortestPath()">GO</button>
-	</div>
-		</section>
-
-		<section id="one" class="wrapper style1">
-			<div class="container">
-				<button class="butn"><a href="main.html" style="text-decoration: none;">Back</a></button>
-			</div>
-		</section>			
-
-		<!-- Footer -->
-		<footer id="footer">
-			<ul class="icons">
-				<li><a href="https://twitter.com/home" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-				<li><a href="https://www.facebook.com/?_rdc=1&_rdr" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-				<li><a href="https://www.instagram.com" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-			</ul>
-			<ul class="menu">
-				<li><a href="FAQ.html">FAQ</a></li>
-				<li><a href="privacy.html">Privacy</a></li>
-				<li><a href="contact.html">Contact</a></li>
-			</ul>
-			<span class="copyright">
-				&copy; Copyright. All rights reserved. Design by <a href="https://www.instagram.com">Charles Junjie A. Mempin</a>
-			</span>
-		</footer>
-	</body>
+</body>
 </html>

@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
   var backgroundImage = new Image();
 
   // Set the source of the image
-  backgroundImage.src = "floor1.jpg"; // Replace with the actual path to your image
+  backgroundImage.src = "images/pic1.png"; // Replace with the actual path to your image
 
   // Once the image is loaded, draw it on the canvas
     backgroundImage.onload = function () {
@@ -84,7 +84,7 @@ class Graph {
     startVertex = document.getElementById('initialLocationBookmark').value;
     endVertex = document.getElementById('desiredLocationBookmark').value;
     var backgroundImage = new Image();
-    backgroundImage.src = "floor1.jpg"; 
+    backgroundImage.src = "images/pic1.png"; 
 
     //console.log(startVertex)
     const graph = new Graph();

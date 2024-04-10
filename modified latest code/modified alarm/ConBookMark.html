@@ -1,22 +1,85 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Changer Bookmark Page</title>
+  <style>
+    .bookmark-container {
+      max-width: 600px;
+      margin: 20px auto;
+    }
 
-<html>
-	<head>
-		<title>MAPúa</title>
-		<link rel="shortcut icon" type="image/png" href="images\MAPúa-logo.png">
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<meta name="description" content="" />
-		<meta name="keywords" content="" />
-		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
-		<script src="js/jquery.min.js"></script>
-		<script src="js/jquery.dropotron.min.js"></script>
-		<script src="js/jquery.scrollgress.min.js"></script>
-		<script src="js/jquery.scrolly.min.js"></script>
-		<script src="js/jquery.slidertron.min.js"></script>
-		<script src="js/skel.min.js"></script>
-		<script src="js/skel-layers.min.js"></script>
-		<script src="js/init.js"></script>
-		<script>
+    #bookmarks-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .bookmark-item {
+      margin-bottom: 10px;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      padding: 5px;
+    }
+
+    .delete-button {
+      margin-left: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+//insert the remaing needed information for 2nd and 6th Floor
+  <div class="bookmark-container">
+    <h1>Image Changer Bookmark Page</h1>
+
+    <form id="bookmarkForm">
+      <label for="initialFloor">Initial Floor:</label>
+      <select id="initialFloorBookmark" onchange="populateInitialLocations()">
+        <option value=" "> </option>
+        <option value="G">Ground Floor</option>
+        <option value="2">Floor 2</option>
+        <option value="3">Floor 3</option>
+		<option value="4">Floor 4</option>
+        <option value="5">Floor 5</option>
+		<option value="6">Floor 6</option>
+      </select>
+
+      <label for="initialLocation">Initial Location:</label>
+      <select id="initialLocationBookmark">
+        <option value=" "> </option>
+      </select>
+
+      <label for="desiredFloor">Desired Floor:</label>
+      <select id="desiredFloorBookmark" onchange="populateDesiredLocations()">
+        <option value=" "> </option>
+        <option value="G">Ground Floor</option>
+        <option value="2">Floor 2</option>
+        <option value="3">Floor 3</option>
+		<option value="4">Floor 4</option>
+        <option value="5">Floor 5</option>
+		<option value="6">Floor 6</option>
+      </select>
+      </select>
+
+      <label for="desiredLocation">Desired Location:</label>
+      <select id="desiredLocationBookmark">
+        <option value=" "> </option>
+        <!-- Desired location options will be populated dynamically based on floor selection -->
+      </select>
+
+      <label for="message">Message:</label>
+      <input type="text" id="messageBookmark" placeholder="Enter your message" size="30">
+
+      <button type="button" onclick="saveBookmark()">+</button>
+    </form>
+
+    <ul id="bookmarks-list" onclick="loadBookmark(event)"></ul>
+
+    <button onclick="backToMainPage()">Back to Main Page</button>
+  </div>
+
+  <script>
     function populateInitialLocations() {
       var floor = document.getElementById('initialFloorBookmark').value;
       var initialLocationDropdown = document.getElementById('initialLocationBookmark');
@@ -484,116 +547,7 @@
 
     window.addEventListener('load', loadBookmarks);
   </script>
-		<noscript>
-			<link rel="stylesheet" href="css/skel.css" />
-			<link rel="stylesheet" href="css/style.css" />
-			<link rel="stylesheet" href="css/style-xlarge.css" />
-		</noscript>
-		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
-		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
-		<style>
-			.select-container {
-				display: flex;
-				justify-content: space-between;
-				margin-bottom: 15px;
-			}
-			.select-label {
-				width: 150px;
-				text-align: right;
-				padding-right: 10px;
-				margin-top: 6px;
-			}
-			.select-dropdown {
-				flex: 1;
-			}
-		</style>
-	</head>
-	<body class="landing">
 
-		<!-- Header -->
-		<header id="header" class="skel-layers-fixed">
-			<a href="main.html"><img src="images\MAPúa-logo.png" style="height: 45px; text-decoration: none;"/></a>	
-			<nav id="nav">
-				<ul>
-					<li><a href="new main.html">Home</a></li>
-					<li><a href="bookmarks.html">Bookmarks</a></li>
-					<li><a href="time.html">Time</a></li>
-				</ul>
-			</nav>
-		</header>
-
-		<!-- Banner -->
-		<section id="banner">
-			<div class="inner">
-				<h2>BOOKMARKS</h2>
-			</div>
-		</section>		
-
-		<!-- Main -->
-		<section id="one" class="wrapper style1">
-			<div class="container">
-				<div class="select-container">
-					
-					<div class="select-dropdown">
-						<div>
-        <label for="initialFloorBookmark">Select Initial Floor:</label>
-        <select id="initialFloorBookmark" onchange="populateInitialLocations()">
-            <option value="G">Ground Floor</option>
-            <option value="2">Floor 2</option>
-            <option value="3">Floor 3</option>
-            <option value="4">Floor 4</option>
-            <option value="5">Floor 5</option>
-            <option value="6">Floor 6</option>
-        </select>
-    </div>
-    <div>
-        <label for="initialLocationBookmark">Initial Location:</label>
-        <select id="initialLocationBookmark"></select>
-    </div>
-
-    <div>
-        <label for="desiredFloorBookmark">Select Desired Floor:</label>
-        <select id="desiredFloorBookmark" onchange="populateDesiredLocations()">
-            <option value="G">Ground Floor</option>
-            <option value="2">Floor 2</option>
-            <option value="3">Floor 3</option>
-            <option value="4">Floor 4</option>
-            <option value="5">Floor 5</option>
-            <option value="6">Floor 6</option>
-        </select>
-    </div>
-    <div>
-        <label for="desiredLocationBookmark">Desired Location:</label>
-        <select id="desiredLocationBookmark"></select>
-    
-	</div> 
-	<div style="margin-top: 20px;">
-				<button type="button" class="butn" onclick="saveBookmark()">+</button>
-				<button class="butn" onclick="findShortestPath()">GO</button>
-	</div>
-		</section>
-
-		<section id="one" class="wrapper style1">
-			<div class="container">
-				<button class="butn"><a href="main.html" style="text-decoration: none;">Back</a></button>
-			</div>
-		</section>			
-
-		<!-- Footer -->
-		<footer id="footer">
-			<ul class="icons">
-				<li><a href="https://twitter.com/home" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-				<li><a href="https://www.facebook.com/?_rdc=1&_rdr" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-				<li><a href="https://www.instagram.com" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-			</ul>
-			<ul class="menu">
-				<li><a href="FAQ.html">FAQ</a></li>
-				<li><a href="privacy.html">Privacy</a></li>
-				<li><a href="contact.html">Contact</a></li>
-			</ul>
-			<span class="copyright">
-				&copy; Copyright. All rights reserved. Design by <a href="https://www.instagram.com">Charles Junjie A. Mempin</a>
-			</span>
-		</footer>
-	</body>
+</body>
 </html>
+
