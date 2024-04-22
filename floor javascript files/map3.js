@@ -96,6 +96,7 @@ class Graph {
 
   //north
   graph.addVertex('technical_section', 98, 191) //Technical Section
+  graph.addVertex('f_exit2', 195, 211) //Fire Exit 2
   graph.addVertex('301', 295, 223) //Rm301
   graph.addVertex('302', 396, 239) //Rm302
   graph.addVertex('303', 415, 243) //Rm303
@@ -105,7 +106,7 @@ class Graph {
   graph.addVertex('307', 718, 293) //Rm307
   graph.addVertex('308', 822, 311) //Rm308
   graph.addVertex('cinema', 860, 338) //Cinema
-  graph.addVertex('f_exit3', 560, 268) //Fire Exit 3
+  graph.addVertex('f_exit3', 966, 360) //Fire Exit 3
   graph.addVertex('shs_lib', 166, 219) //SHS Library
   graph.addVertex('n_toilets', 550, 295) //North Toilets
 
@@ -113,7 +114,7 @@ class Graph {
   graph.addVertex('college_library', 2844, 456) //College Library
   graph.addVertex('s_toilets', 544, 458) //South Toilets
   graph.addVertex('doit', 598, 458) //DOIT
-  graph.addVertex('f_exit4', 640, 458) //Fire Exit 4
+  graph.addVertex('f_exit4', 598, 463) //Fire Exit 4
   graph.addVertex('310', 754, 455) //Rm310
   graph.addVertex('311', 821, 457) //Rm311
   graph.addVertex('312', 842, 457) //Rm312
@@ -121,18 +122,93 @@ class Graph {
   graph.addVertex('314', 895, 457) //Rm314
   graph.addVertex('315', 933, 456) //Rm315
 
+  graph.addVertex('f_exit5', 246, 476) //Fire Exit 5
   graph.addVertex('316', 306, 480) //Rm316
   graph.addVertex('317', 393, 476) //Rm317
   graph.addVertex('318', 477, 478) //Rm318
   graph.addVertex('319', 546, 478) //Rm319
   graph.addVertex('320', 618, 479) //Rm320
 
+  graph.addVertex('f_exit6', 874, 480) //Fire Exit 6
   graph.addVertex('321', 676, 480) //Rm321
   graph.addVertex('322', 747, 480) //Rm322
   graph.addVertex('323', 817, 479) //Rm323
   graph.addVertex('324', 830, 481) //Rm324
   graph.addVertex('325', 901, 480) //Rm325
 
+// North Edges
+  graph.addEdge('elevator', '1'); //elevator to north
+  graph.addEdge('shs_lib', 'technical_section'); //SHS Library to Technical Section
+  graph.addEdge('shs_lib', '301');
+  graph.addEdge('technical_section','f_exit2' ); //Technical Section To Fire Exit 2
+  graph.addEdge('f_exit2','301'); //Fire Exit 2 to 301
+  graph.addEdge('301', '302'); // 301 to 302
+  graph.addEdge('302', '303'); // 302 to 303
+  graph.addEdge('303', '304'); // 303 to 304
+  graph.addEdge('304', '305'); // 304 to 305
+  graph.addEdge('305', '306'); // 305 to 306
+  graph.addEdge('306', '307'); // 306 to 307
+  graph.addEdge('307', '308'); // 307 to 308
+  graph.addEdge('308','cinema' ); // 308 to Cinema 
+  graph.addEdge('cinema','f_exit3');//cinema to Fire Exit 3
+
+  graph.addEdge('n_toilets','304');
+  graph.addEdge('n_toilets','305');
+  graph.addEdge('n_toilets','306');
+  graph.addEdge('n_toilets','307');
+  graph.addEdge('1', '303');
+  graph.addEdge('1', '304');
+  graph.addEdge('1', 'shs_lib'); //north to SHS Library
+  graph.addEdge('1', 'n_toilets'); //north to North Toilets
+  graph.addEdge('n_toilets','f_exit3'); //North Toilets to Fire Exit 3
+
+  
+  // South Edges
+  graph.addEdge('elevator', '2'); //elevator to South
+  graph.addEdge('2','s_toilets'); // South to South Toilets
+  graph.addEdge('s_toilets','f_exit4'); // South Toilets to Fire Exit 4
+  graph.addEdge('f_exit4','doit');// Fire Exit 4 to Doit
+  graph.addEdge('doit','310');// DOIT to 310
+  graph.addEdge('310', '311'); // 310 to 311
+  graph.addEdge('311', '312'); // 311 to 312
+  graph.addEdge('312', '313'); // 312 to 313
+  graph.addEdge('313', '314'); // 313 to 314
+  graph.addEdge('314', '315'); // 314 to 315
+  graph.addEdge('315','325' ); // 315 to 325
+
+
+  graph.addEdge('2','college_library' ); //South to College Library
+  graph.addEdge('college_library','f_exit5' ); //College Library to Fire Exit 5 
+  graph.addEdge('f_exit5', '316'); // Fire Exit 5 to 316
+  graph.addEdge('316', '317'); // 316 to 317
+  graph.addEdge('316', 'college_library');
+  graph.addEdge('317', 'college_library');
+  graph.addEdge('317', '2');
+  graph.addEdge('318', '2');
+  graph.addEdge('319', '2');
+  graph.addEdge('s_toilets','318');
+  graph.addEdge('s_toilets','319');
+  graph.addEdge('s_toilets','320');
+  graph.addEdge('s_toilets','321');
+  graph.addEdge('doit', '320');
+  graph.addEdge('doit', '321');
+  graph.addEdge('doit', '322');
+  graph.addEdge('310', '321');
+  graph.addEdge('310', '322');
+  graph.addEdge('310', '323');
+  graph.addEdge('324', '312');
+  graph.addEdge('324', '313');
+  graph.addEdge('324', '314');  
+  graph.addEdge('317', '318'); // 317 to 318
+  graph.addEdge('318', '319'); // 318 to 319
+  graph.addEdge('319', '320'); // 319 to 320
+  graph.addEdge('320', '321'); // 320 to 321
+  graph.addEdge('321', '322'); // 321 to 322
+  graph.addEdge('322', '323'); // 322 to 323
+  graph.addEdge('323', '324'); // 323 to 324
+  graph.addEdge('324', 'f_exit6'); // 324 to Fire Exit 6
+  graph.addEdge('f_exit6','325' ); // Fire Exit 6 to 325 
+  graph.addEdge('325','315' ); // 325 to 315
   const shortestPath = graph.bfs(startVertex, endVertex);
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext('2d');
