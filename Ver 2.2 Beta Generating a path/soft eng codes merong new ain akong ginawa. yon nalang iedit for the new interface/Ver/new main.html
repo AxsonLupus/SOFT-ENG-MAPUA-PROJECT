@@ -1,0 +1,584 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>MAPúa</title>
+    <link rel="shortcut icon" type="image/png" href="images\MAPúa-logo.png">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.dropotron.min.js"></script>
+    <script src="js/jquery.scrollgress.min.js"></script>
+    <script src="js/jquery.scrolly.min.js"></script>
+    <script src="js/jquery.slidertron.min.js"></script>
+    <script src="js/skel.min.js"></script>
+    <script src="js/skel-layers.min.js"></script>
+    <script src="js/init.js"></script>
+
+    <noscript>
+        <link rel="stylesheet" href="css/skel.css" />
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="css/style-xlarge.css" />
+    </noscript>
+    <!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+    <style>
+        .pic-button {
+            background-color: #f1ee8e;
+            border: none;
+            color: black;
+            padding: 10px 50px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .pic-button:hover {
+            background-color: #fcd757; /* Lighter shade of yellow */
+            transform: scale(1.05); /* Increase button size on hover */
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        .pic-button:nth-child(n+2) {
+            margin-left: 10px;
+        }
+
+        .select {
+            margin-bottom: 20px;
+        }
+
+        .select select {
+            padding-bottom: 5px;
+        }
+
+        .select label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .go-button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .go-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body class="landing">
+
+<!-- Header -->
+<header id="header" class="skel-layers-fixed">
+    <a href="main.html" style="text-decoration: none;"><img src="images\MAPúa-logo.png" style="height: 45px; text-decoration: none;"/></a>
+    <nav id="nav">
+        <ul>
+            <li><a href="new main.html">Home</a></li>
+            <li><a href="bookmarks.html">Bookmarks</a></li>
+            <li><a href="time.html">Time</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Banner -->
+<section id="banner">
+    <div class="inner">
+        <h2>MAPúa</h2>
+        <p>Indoor Map for Mapúa University</p>
+
+    </div>
+</section>
+
+<section id="one" class="wrapper style1">
+    <div class="container" style="margin-bottom:20px;">
+        <header class="major">
+            <h2>Where are you and where do you want to go?</h2>
+            <div>
+                <button class="pic-button" onclick="changeImage('images/Ground_Floor.png')">Ground Floor</button>
+                <button class="pic-button" onclick="changeImage('images/2nd_Floor.png')">2nd Floor</button>
+                <button class="pic-button" onclick="changeImage('images/3rd_Floor.png')">3rd Floor</button>
+                <button class="pic-button" onclick="changeImage('images/4th_Floor.png')">4th Floor</button>
+                <button class="pic-button" onclick="changeImage('images/5th_Floor.png')">5th Floor</button>
+                <button class="pic-button" onclick="changeImage('images/6th_Floor.png')">6th Floor</button>
+            </div>
+			 <hr width="100%" color="red" size="7">
+			<div class="container">
+    <img id="floorImage" src="images/Ground_Floor.png" alt="Floor Image" class="map-layout"/>
+</div>
+
+        </header>
+    </div>
+</section>
+
+<section id="one" class="wrapper style1">
+
+    <div class="container">
+        <div class="row">
+            <div class="6u 12u$(mobile)">
+                <div class="select">
+                    <label for="initialFloorBookmark">Initial Floor:</label>
+                    <select id="initialFloorBookmark" onchange="populateInitialLocations()">
+                        <option value="">Select Floor</option>
+                        <option value="Ground_Floor">Ground Floor</option>
+                        <option value="2nd_Floor">2nd Floor</option>
+                        <option value="3rd_Floor">3rd Floor</option>
+                        <option value="4th_Floor">4th Floor</option>
+                        <option value="5th_Floor">5th Floor</option>
+                        <option value="6th_Floor">6th Floor</option>
+                    </select>
+                </div>
+                <div class="select">
+                    <label for="initialLocationBookmark">Initial Location:</label>
+                    <select id="initialLocationBookmark">
+                        <option value="">Select Location</option>
+                        <!-- Options will be populated dynamically based on selected floor -->
+                    </select>
+                </div>
+            </div>
+            <div class="6u$ 12u$(mobile)">
+                <div class="select">
+                    <label for="desiredFloorBookmark">Desired Floor:</label>
+                    <select id="desiredFloorBookmark" onchange="populateDesiredLocations()">
+                        <option value="">Select Floor</option>
+                        <option value="Ground_Floor">Ground Floor</option>
+                        <option value="2nd_Floor">2nd Floor</option>
+                        <option value="3rd_Floor">3rd Floor</option>
+                        <option value="4th_Floor">4th Floor</option>
+                        <option value="5th_Floor">5th Floor</option>
+                        <option value="6th_Floor">6th Floor</option>
+                    </select>
+                </div>
+                <div class="select">
+                    <label for="desiredLocationBookmark">Desired Location:</label>
+                    <select id="desiredLocationBookmark">
+                        <option value="">Select Location</option>
+                        <!-- Options will be populated dynamically based on selected floor -->
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="button-container">
+        <button class="butn" onclick="findShortestPath()">GO</button>
+    </div>
+	
+	<div class="button-container">
+        <button class="butn" onclick="navigate()">Navigate</button>
+    </div>
+</section>
+
+<footer id="footer">
+    <ul class="icons">
+        <li><a href="#" class="icon circle fa-twitter"><span class="label">Twitter</span></a></li>
+        <li><a href="#" class="icon circle fa-facebook"><span class="label">Facebook</span></a></li>
+        <li><a href="#" class="icon circle fa-instagram"><span class="label">Instagram</span></a></li>
+    </ul>
+    <ul class="menu">
+        <li><a href="#">About</a></li>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <span class="copyright">
+        &copy; Copyright. All rights reserved. Design by <a href="https://www.instagram.com">Group VII</a>
+    </span>
+</footer>
+<script src="map1.js"></script>
+<script src="map2.js"></script>
+<script src="map3.js"></script>
+<script src="map4.js"></script>
+<script src="map5.js"></script>
+<script src="map6.js"></script>
+<script>
+    function populateInitialLocations() {
+        var floor = document.getElementById("initialFloorBookmark").value;
+        var initialLocationDropdown = document.getElementById("initialLocationBookmark");
+        initialLocationDropdown.innerHTML = "";
+        
+        if (floor === "Ground_Floor") {
+            initialLocationDropdown.innerHTML = `
+			<option value=""> </option>
+                <option value="elevator"> elevator </option>
+							<option value="fire-exit-elevator"> fire-exit-elevator </option>
+							<option value="canteen"> canteen </option>
+							<option value="Student lounge 1"> Student lounge 1 </option>
+							<option value="hallway"> hallway </option>
+							<option value="clinic"> clinic </option>
+							<option value="orientation room"> orientation room </option>
+							<option value="counsellor"> counsellor </option>
+							<option value="multi-purpose"> multi-purpose </option>
+							<option value="tech serve"> tech serve </option>
+							<option value="student council"> student council </option>
+							<option value="SOCIP"> SOCIP </option>
+							<option value="Registrar"> Registrar </option>
+							<option value="admission"> admission </option>
+							<option value="treasury"> treasury </option>
+							<option value="student lounge 2"> student lounge 2 </option>
+							<option value="fire exit 2"> fire exit 2 </option>
+							<option value="lobby area"> lobby area </option>
+							<option value="bookstore"> bookstore </option>
+            `;
+					 document.getElementById('displayedImage').src = "images/Ground_Floor.png"; // Change image source
+
+        } else if (floor === '2nd_Floor') {
+        initialLocationDropdown.innerHTML = `
+          <option value=" "> </option>
+          <option value="Transformer Room">Transformer Room</option>
+		  <option value="Computer Lab 201 ">Computer Lab 201 </option>
+		  <option value="Lecture Room 202  ">Lecture Room 202 </option>
+		  <option value="Lecture Room 203  ">Lecture Room 203 </option>
+		  <option value="Lecture Room 20 ">Lecture Room 204 </option>
+		  <option value="Lecture Room 205 ">Lecture Room 205 </option>
+		  <option value="Lecture Room 206  ">Lecture Room 206 </option>
+		  <option value="Lecture Room 207 ">Lecture Room 207</option>
+		  <option value="Lecture Room 208 ">Lecture Room 208 </option>
+		  <option value="Physics Lab 209 ">Physics Lab 209 </option>
+		  <option value="Biology Lab 210 ">Biology Lab 210 </option>
+		  <option value="Chemistry Lab 211 ">Chemistry Lab 211 </option>
+		  <option value="Case Study 3  ">Case Study 3 </option>
+		  <option value="Lecture Room 212 ">Lecture Room 212 </option>
+		  <option value="Lecture Room 213 ">Lecture Room 213 </option>
+		  <option value="Lecture Room 214  ">Lecture Room 214 </option>
+		  <option value="Lecture Room 215 ">Lecture Room 215 </option>
+		  <option value="Lecture Room 216  ">Lecture Room 216 </option>
+		  <option value="Lecture Room 217 ">Lecture Room 217 </option>
+		  <option value="Lecture Room 218 ">Lecture Room 218 </option>
+		  <option value="Lecture Room 220 ">Lecture Room 220 </option>
+		  <option value="Lecture Room 221 ">Lecture Room 221 </option>
+		  <option value="Lecture Room 222  ">Lecture Room 222 </option>
+		  <option value="Lecture Room 223  ">Lecture Room 223 </option>
+		  <option value=" "> </option>
+          
+        `;
+							 document.getElementById('displayedImage').src = "images/2nd_Floor.png"; // Change image source
+
+      } else if (floor === '3rd_Floor') {
+        initialLocationDropdown.innerHTML = `
+          <option value=" "> </option>
+          <option value="Technical Section "> Technical Section </option>
+          <option value=" Dry Pantry"> Dry Pantry </option>
+          <option value="GSR-2 "> GSR-2 </option>
+          <option value="GSR-1 "> GSR-1</option>
+          <option value=" Game Devt Computer Lab 301 "> Game Devt Computer Lab 301</option>
+          <option value="MAC LAB 302 "> MAC LAB 302</option>
+          <option value="Lecture Room 303 "> Lecture Room 303</option>
+          <option value="lecture Room 304 "> lecture Room 304</option>
+          <option value="Computer Lab 305 "> Computer Lab 305</option>
+          <option value="Lecture Room 306 "> Lecture Room 306</option>
+          <option value="Computer Lab 307 "> Computer Lab 307</option>
+          <option value="Lecture Room 308 "> Lecture Room 308</option>
+          <option value="AVR 309 "> AVR 309</option>
+          <option value="Library "> Library </option>
+          <option value="Fire Exit 3 "> Fire Exit 3</option>
+          <option value="Fire Exit 4 "> Fire Exit 4</option>
+          <option value="Elevator Lobby "> Elevator Lobby</option>
+          <option value="Storage "> Storage</option>
+          <option value="DOIT Office "> DOIT Office</option>
+          <option value="HP/UniX/Linux Lab 310 "> HP/UniX/Linux Lab 310</option>
+          <option value="Open Lab 311 "> Open Lab 311</option>
+          <option value="Reserach Lab Chair 312 "> Reserach Lab Chair 312</option>
+          <option value=" Research Lab Aimco 313 "> Research Lab Aimco 313</option>
+          <option value="Research Lab Primal 314 "> Research Lab Primal 314</option>
+          <option value="Research Lab ICT 315 "> Research Lab ICT 315</option>
+          <option value="Computer Lab 316 "> Computer Lab 316</option>
+          <option value="Computer Lab 317 "> Computer Lab 317</option>
+          <option value="Computer Lab 318 "> Computer Lab 318</option>
+          <option value="Lecture Room 319 "> Lecture Room 319</option>
+          <option value="Computer Lab 320 "> Computer Lab 320</option>
+          <option value="Computer Lab 321 "> Computer Lab 321</option>
+          <option value="Computer Lab 322 "> Computer Lab 322</option>
+          <option value="Computer Lab 323 "> Computer Lab 323</option>
+          <option value="Lecture Room 324 "> Lecture Room 324</option>
+          <option value="Lecture Room 325 "> Lecture Room 325</option>
+        `;
+							 document.getElementById('displayedImage').src = "images/3rd_Floor.png"; // Change image source
+
+      }else if (floor === '4th_Floor') {
+        initialLocationDropdown.innerHTML = `
+          <option value=" "> </option>
+          <option value="Elevator Lobby ">Elevator Lobby</option>
+          <option value="PC Hardware Lan 401 ">PC Hardware Lan 401 </option>
+		  <option value="CISCO Lab 402 ">CISCO Lab 402</option>
+          <option value="Skills Lab 403  ">Skills Lab 403 </option>
+		  <option value="Skills Lab 404 ">Skills Lab 404 </option>
+		  <option value="CCESO  ">CCESO  </option>
+		  <option value="PE ">PE </option>
+		  <option value="Computer Lab 405 ">Computer Lab 405</option>
+		  <option value="Computer Lab 406 ">Computer Lab 406</option>
+		  <option value="Computer Lab 407 ">Computer Lab 407 </option>
+		  <option value="Lecture Room 408 ">Lecture Room 408 </option>
+		  <option value="Computer Lab 409 ">Computer Lab 409 </option>
+		  <option value="Lecture Lab 410 ">Lecture Lab 410 </option>
+		  <option value="CISCO Lab 411 ">CISCO Lab 411 </option>
+		  <option value="ILMO ">ILMO </option>
+		  <option value="ILMO STO ">ILMO STO </option>
+		  <option value="Roof Deck ">Roof Deck </option>
+		  <option value=" "> </option>
+        `;
+		document.getElementById('displayedImage').src = "images/4th_Floor.png"; // Change image source
+
+      }else if (floor === '5th_Floor') {
+        initialLocationDropdown.innerHTML = `
+          <option value=" "> </option>
+		  <option value="Elevator Lobby ">Elevator Lobby </option>
+			<option value="Magic lab 501 ">Magic lab 501 </option>
+			<option value="Art Studio 502 ">Art Studio 502 </option>
+			<option value="Magic Lab 503 ">Magic Lab 503 </option>
+			<option value="Lecture Room 504 ">Lecture Room 504 </option>
+			<option value="SMS Faculty ">SMS Faculty </option>
+			<option value="Lecture Room 505  ">Lecture Room 505 </option>
+			<option value="Lecture Room 506 ">Lecture Room 506 </option>
+			<option value="Magic Lab 507 ">Magic Lab 507 </option>
+			<option value="News Room 508 ">News Room 508 </option>
+			<option value="TV Production Studio 509  ">TV Production Studio 509 </option>
+			<option value="Sound Lock ">Sound Lock </option>
+			<option value="Control Room ">Control Room </option>
+			<option value="Radio Production Studio 510 ">Radio Production Studio 510 </option>
+			<option value="Photography Studio 511 ">Photography Studio 511 </option>
+		  <option value=" "> </option>
+        `;
+		document.getElementById('displayedImage').src = "images/5th_Floor.png"; // Change image source
+
+      } else if (floor === '6th_Floor') {
+        initialLocationDropdown.innerHTML = `
+          <option value=" "> </option>
+          <option value="Elevator Lobby ">Elevator Lobby </option>
+		  <option value="Toilet Room ">Toilet Room</option>
+		  <option value="Multi-Faith Prayer Room">Multi-Faith Prayer Room </option>
+          <option value="Pantry  ">Pantry </option>
+		  <option value="Accreditation Office  ">Accreditation Office </option>
+		  <option value="Conference Room ">Conference Room </option>
+          <option value="Computer Lab 601 ">Computer Lab 601 </option>
+		  <option value="Drawinhg Lab 602  ">Drawinhg Lab 602 </option>
+		  <option value="Lecture Room 603 ">Lecture Room 603</option>
+          <option value="Lecture Room 604 ">Lecture Room 604 </option>
+		  <option value="Lecture Room 605 ">Lecture Room 605 </option>
+		  <option value="Lecture Room 606 ">Lecture Room 606 </option>
+          <option value="Lecture Room 607 ">Lecture Room 607 </option>
+		  <option value="ISLAM Prayer Room ">ISLAM Prayer Room </option>
+		  <option value="ETYSBM ">ETYSBM </option>
+          <option value="SLHS ">SLHS </option>
+		  <option value="Transient Office ">Transient Office </option>
+        `;
+		document.getElementById('displayedImage').src = "images/6th_Floor.png"; // Change image source
+
+      } 
+    }
+
+    function populateDesiredLocations() {
+        var floor = document.getElementById("desiredFloorBookmark").value;
+        var desiredLocationDropdown = document.getElementById("desiredLocationBookmark");
+        desiredLocationDropdown.innerHTML = "";
+        
+        if (floor === "Ground_Floor") {
+            desiredLocationDropdown.innerHTML = `
+			<option value=""> </option>
+<option value="elevator"> elevator </option>
+							<option value="fire-exit-elevator"> fire-exit-elevator </option>
+							<option value="canteen"> canteen </option>
+							<option value="Student lounge 1"> Student lounge 1 </option>
+							<option value="hallway"> hallway </option>
+							<option value="clinic"> clinic </option>
+							<option value="orientation room"> orientation room </option>
+							<option value="counsellor"> counsellor </option>
+							<option value="multi-purpose"> multi-purpose </option>
+							<option value="tech serve"> tech serve </option>
+							<option value="student council"> student council </option>
+							<option value="SOCIP"> SOCIP </option>
+							<option value="Registrar"> Registrar </option>
+							<option value="admission"> admission </option>
+							<option value="treasury"> treasury </option>
+							<option value="student lounge 2"> student lounge 2 </option>
+							<option value="fire exit 2"> fire exit 2 </option>
+							<option value="lobby area"> lobby area </option>
+							<option value="bookstore"> bookstore </option>
+        `;
+							 document.getElementById('displayedImage').src = "images/Ground_Floor.png"; // Change image source
+
+      } else if (floor === '2nd_Floor') {
+        desiredLocationDropdown.innerHTML = `
+          <option value=" "> </option>
+          <option value="Transformer Room">Transformer Room</option>
+		  <option value="Computer Lab 201 ">Computer Lab 201 </option>
+		  <option value="Lecture Room 202  ">Lecture Room 202 </option>
+		  <option value="Lecture Room 203  ">Lecture Room 203 </option>
+		  <option value="Lecture Room 20 ">Lecture Room 204 </option>
+		  <option value="Lecture Room 205 ">Lecture Room 205 </option>
+		  <option value="Lecture Room 206  ">Lecture Room 206 </option>
+		  <option value="Lecture Room 207 ">Lecture Room 207</option>
+		  <option value="Lecture Room 208 ">Lecture Room 208 </option>
+		  <option value="Physics Lab 209 ">Physics Lab 209 </option>
+		  <option value="Biology Lab 210 ">Biology Lab 210 </option>
+		  <option value="Chemistry Lab 211 ">Chemistry Lab 211 </option>
+		  <option value="Case Study 3  ">Case Study 3 </option>
+		  <option value="Lecture Room 212 ">Lecture Room 212 </option>
+		  <option value="Lecture Room 213 ">Lecture Room 213 </option>
+		  <option value="Lecture Room 214  ">Lecture Room 214 </option>
+		  <option value="Lecture Room 215 ">Lecture Room 215 </option>
+		  <option value="Lecture Room 216  ">Lecture Room 216 </option>
+		  <option value="Lecture Room 217 ">Lecture Room 217 </option>
+		  <option value="Lecture Room 218 ">Lecture Room 218 </option>
+		  <option value="Lecture Room 220 ">Lecture Room 220 </option>
+		  <option value="Lecture Room 221 ">Lecture Room 221 </option>
+		  <option value="Lecture Room 222  ">Lecture Room 222 </option>
+		  <option value="Lecture Room 223  ">Lecture Room 223 </option>
+		  <option value=" "> </option>
+        `;
+							 document.getElementById('displayedImage').src = "images/2nd_Floor.png"; // Change image source
+
+      } else if (floor === '3rd_Floor') {
+        desiredLocationDropdown.innerHTML = `
+          <option value="Technical Section "> Technical Section </option>
+          <option value=" Dry Pantry"> Dry Pantry </option>
+          <option value="GSR-2 "> GSR-2 </option>
+          <option value="GSR-1 "> GSR-1</option>
+          <option value=" Game Devt Computer Lab 301 "> Game Devt Computer Lab 301</option>
+          <option value="MAC LAB 302 "> MAC LAB 302</option>
+          <option value="Lecture Room 303 "> Lecture Room 303</option>
+          <option value="lecture Room 304 "> lecture Room 304</option>
+          <option value="Computer Lab 305 "> Computer Lab 305</option>
+          <option value="Lecture Room 306 "> Lecture Room 306</option>
+          <option value="Computer Lab 307 "> Computer Lab 307</option>
+          <option value="Lecture Room 308 "> Lecture Room 308</option>
+          <option value="AVR 309 "> AVR 309</option>
+          <option value="Library "> Library </option>
+          <option value="Fire Exit 3 "> Fire Exit 3</option>
+          <option value="Fire Exit 4 "> Fire Exit 4</option>
+          <option value="Elevator Lobby "> Elevator Lobby</option>
+          <option value="Storage "> Storage</option>
+          <option value="DOIT Office "> DOIT Office</option>
+          <option value="HP/UniX/Linux Lab 310 "> HP/UniX/Linux Lab 310</option>
+          <option value="Open Lab 311 "> Open Lab 311</option>
+          <option value="Reserach Lab Chair 312 "> Reserach Lab Chair 312</option>
+          <option value=" Research Lab Aimco 313 "> Research Lab Aimco 313</option>
+          <option value="Research Lab Primal 314 "> Research Lab Primal 314</option>
+          <option value="Research Lab ICT 315 "> Research Lab ICT 315</option>
+          <option value="Computer Lab 316 "> Computer Lab 316</option>
+          <option value="Computer Lab 317 "> Computer Lab 317</option>
+          <option value="Computer Lab 318 "> Computer Lab 318</option>
+          <option value="Lecture Room 319 "> Lecture Room 319</option>
+          <option value="Computer Lab 320 "> Computer Lab 320</option>
+          <option value="Computer Lab 321 "> Computer Lab 321</option>
+          <option value="Computer Lab 322 "> Computer Lab 322</option>
+          <option value="Computer Lab 323 "> Computer Lab 323</option>
+          <option value="Lecture Room 324 "> Lecture Room 324</option>
+          <option value="Lecture Room 325 "> Lecture Room 325</option>
+        `;
+		document.getElementById('displayedImage').src = "images/3rd_Floor.png"; // Change image source
+
+      }else if (floor === '4th_Floor') {
+        desiredLocationDropdown.innerHTML = `
+          <option value=" "> </option>
+          <option value=" "> </option>
+          <option value="Elevator Lobby ">Elevator Lobby</option>
+          <option value="PC Hardware Lan 401 ">PC Hardware Lan 401 </option>
+		  <option value="CISCO Lab 402 ">CISCO Lab 402</option>
+          <option value="Skills Lab 403  ">Skills Lab 403 </option>
+		  <option value="Skills Lab 404 ">Skills Lab 404 </option>
+		  <option value="CCESO  ">CCESO  </option>
+		  <option value="PE ">PE </option>
+		  <option value="Computer Lab 405 ">Computer Lab 405</option>
+		  <option value="Computer Lab 406 ">Computer Lab 406</option>
+		  <option value="Computer Lab 407 ">Computer Lab 407 </option>
+		  <option value="Lecture Room 408 ">Lecture Room 408 </option>
+		  <option value="Computer Lab 409 ">Computer Lab 409 </option>
+		  <option value="Lecture Lab 410 ">Lecture Lab 410 </option>
+		  <option value="CISCO Lab 411 ">CISCO Lab 411 </option>
+		  <option value="ILMO ">ILMO </option>
+		  <option value="ILMO STO ">ILMO STO </option>
+		  <option value="Roof Deck ">Roof Deck </option>
+        `;
+							 document.getElementById('displayedImage').src = "images/4th_Floor.png"; // Change image source
+
+      }else if (floor === '5th_Floor') {
+        desiredLocationDropdown.innerHTML = `
+          <option value=" "> </option>
+		  <option value="Elevator Lobby ">Elevator Lobby </option>
+			<option value="Magic lab 501 ">Magic lab 501 </option>
+			<option value="Art Studio 502 ">Art Studio 502 </option>
+			<option value="Magic Lab 503 ">Magic Lab 503 </option>
+			<option value="Lecture Room 504 ">Lecture Room 504 </option>
+			<option value="SMS Faculty ">SMS Faculty </option>
+			<option value="Lecture Room 505  ">Lecture Room 505 </option>
+			<option value="Lecture Room 506 ">Lecture Room 506 </option>
+			<option value="Magic Lab 507 ">Magic Lab 507 </option>
+			<option value="News Room 508 ">News Room 508 </option>
+			<option value="TV Production Studio 509  ">TV Production Studio 509 </option>
+			<option value="Sound Lock ">Sound Lock </option>
+			<option value="Control Room ">Control Room </option>
+			<option value="Radio Production Studio 510 ">Radio Production Studio 510 </option>
+			<option value="Photography Studio 511 ">Photography Studio 511 </option>
+		  <option value=" "> </option>
+        `;
+							 document.getElementById('displayedImage').src = "images/5th_Floor.png"; // Change image source
+
+      } else if (floor === '6th_Floor') {
+        desiredLocationDropdown.innerHTML = `
+          <option value=" "> </option>
+          <option value="Elevator Lobby ">Elevator Lobby </option>
+		  <option value="Toilet Room ">Toilet Room</option>
+		  <option value="Multi-Faith Prayer Room">Multi-Faith Prayer Room </option>
+          <option value="Pantry  ">Pantry </option>
+		  <option value="Accreditation Office  ">Accreditation Office </option>
+		  <option value="Conference Room ">Conference Room </option>
+          <option value="Computer Lab 601 ">Computer Lab 601 </option>
+		  <option value="Drawinhg Lab 602  ">Drawinhg Lab 602 </option>
+		  <option value="Lecture Room 603 ">Lecture Room 603</option>
+          <option value="Lecture Room 604 ">Lecture Room 604 </option>
+		  <option value="Lecture Room 605 ">Lecture Room 605 </option>
+		  <option value="Lecture Room 606 ">Lecture Room 606 </option>
+          <option value="Lecture Room 607 ">Lecture Room 607 </option>
+		  <option value="ISLAM Prayer Room ">ISLAM Prayer Room </option>
+		  <option value="ETYSBM ">ETYSBM </option>
+          <option value="SLHS ">SLHS </option>
+		  <option value="Transient Office ">Transient Office </option>
+        `;
+					 document.getElementById('displayedImage').src = "images/6th_Floor.png"; // Change image source
+
+      } 
+    }
+
+    function navigate() {
+		
+        var initialLocation = document.getElementById("initialFloorBookmark").value;
+        var desiredLocation = document.getElementById("desiredFloorBookmark").value;
+        
+        // Add your navigation logic here
+		var floorImage = document.getElementById("floorImage");
+		floorImage.src = "images/" + desiredLocation + ".png";
+        alert("Navigate from " + initialLocation + " to " + desiredLocation);
+		
+    }
+	
+	    function changeImage(imageSrc) {
+        var floorImage = document.getElementById("floorImage");
+		
+		let imageChange = 1; // Keeps track of the current image
+        // Change the image source
+		imageChange = imageChange === 6 ? 1 : 6; // Switch between two images
+        floorImage.src = imageSrc;
+    }
+
+</script>
+</body>
+</html>
