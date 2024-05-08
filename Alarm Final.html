@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alarm Page</title>
+  <style>
+    .alarm-container {
+      max-width: 600px;
+      margin: 20px auto;
+    }
+
+    #alarms-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .alarm-item {
+      margin-bottom: 10px;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      padding: 5px;
+    }
+
+    .delete-button {
+      margin-left: 5px;
+      cursor: pointer;
+    }
+	
+	
+  </style>
+</head>
+<body>
+
+  <div class="alarm-container">
+    <h1>Alarm Page</h1>
+
+    <form id="alarmForm">
+      <label for="initialFloor">Initial Floor:</label>
+      <select id="initialFloorAlarm" onchange="populateInitialLocations()">
+	  <option value=" "> </option> 
+        <option value="G">Ground Floor</option>
+        <option value="2">Floor 2</option>
+        <option value="3">Floor 3</option>
+		<option value="4">Floor 4</option>
+        <option value="5">Floor 5</option>
+		<option value="6">Floor 6</option>
+      </select>
+
+      <label for="initialLocation">Initial Location:</label>
+      <select id="initialLocationAlarm">
+        <option value=" "> </option>
+        <!-- Initial location options will be populated dynamically based on floor selection -->
+      </select>
+
+      <label for="desiredFloor">Desired Floor:</label>
+      <select id="desiredFloorAlarm" onchange="populateDesiredLocations()">
+        <option value=" "> </option>
+        <option value="G">Ground Floor</option>
+        <option value="2">Floor 2</option>
+        <option value="3">Floor 3</option>
+		<option value="4">Floor 4</option>
+        <option value="5">Floor 5</option>
+		<option value="6">Floor 6</option>
+      </select>
+
+      <label for="desiredLocation">Desired Location:</label>
+      <select id="desiredLocationAlarm">
+        <option value=" "> </option>
+        <!-- Desired location options will be populated dynamically based on floor selection -->
+      </select>
+
+      <label for="alarmTime">Alarm Time:</label>
+      <input type="time" id="alarmTime" required>
+
+      <fieldset>
+        <legend>Select Days:</legend>
+        <label><input type="checkbox" name="day" value="Monday"> Monday</label>
+        <label><input type="checkbox" name="day" value="Tuesday"> Tuesday</label>
+        <label><input type="checkbox" name="day" value="Wednesday"> Wednesday</label>
+        <label><input type="checkbox" name="day" value="Thursday"> Thursday</label>
+        <label><input type="checkbox" name="day" value="Friday"> Friday</label>
+        <label><input type="checkbox" name="day" value="Saturday"> Saturday</label>
+        <label><input type="checkbox" name="day" value="Sunday"> Sunday</label>
+      </fieldset>
+
+      <button type="button" onclick="setAlarm()">Set Alarm</button>
+    </form>
+
+    <ul id="alarms-list" onclick="loadAlarm(event)"></ul>
+
+    <button onclick="backToMainPage()">Back to Main Page</button>
+	
+	 <button onclick="triggerAlarm()">Trigger Alarm</button>
+  </div>
+
+  <!-- dito ung sound lagay nalang kayo para iba-->
+  <audio id="alarmSound" loop>
+    <source src="sound/alarm.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    function populateInitialLocations() {
+      // Placeholder for populating initial locations based on selected floor
+      var floor = document.getElementById('initialFloorAlarm').value;
+      var initialLocationDropdown = document.getElementById('initialLocationAlarm');
+      initialLocationDropdown.innerHTML = '';
+
+      if (floor === 'G') {
+        initialLocationDropdown.innerHTML = `
+          <option value=""> </option>
+<option value="Admin Assist">Admin Assist</option>
+<option value="Admin Office">Admin Office</option>
+<option value="Book Store">Book Store</option>
+<option value="Canteen">Canteen</option>
+<option value="Clinic">Clinic</option>
+<option value="Elevator Lobby">Elevator Lobby</option>
+<option value="Student Lounge 1">Student Lounge 1</option>
+<option value="Student Lounge 2">Student Lounge 2</option>
+<option value="Hallway">Hallway</option>
+<option value="Lobby Area">Lobby Area</option>
+<option value="Orientation Room">Orientation Room</option>
+<option value="Student Council">Student Council</option>
+<option value="SOCIP">SOCIP</option>
+<option value="Registrar">Registrar</option>
+<option value="Treasury">Treasury</option>
+<option value="Waiting Area">Waiting Area</option>
+<option value="Admission">Admission</option>
+<option value="Multi Purpose">Multi Purpose</option>
+<option value="Tech Room">Tech Room</option>
+        `;
+      } else if (floor === '2') {
+        initialLocationDropdown.innerHTML = `
+          <option value=" "> </option>
+          <option value="Transformer Room">Transformer Room</option>
+		  <option value="Computer Lab 201">Computer Lab 201 </option>
+		  <option value="Lecture Room 202">Lecture Room 202 </option>
+		  <option value="Lecture Room 203">Lecture Room 203 </option>
+		  <option value="Lecture Room 20">Lecture Room 204 </option>
+		  <option value="Lecture Room 205">Lecture Room 205 </option>
+		  <option value="Lecture Room 206">Lecture Room 206 </option>
+		  <option value="Lecture Room 207">Lecture Room 207</option>
+		  <option value="Lecture Room 208">Lecture Room 208 </option>
+		  <option value="Physics Lab 209">Physics Lab 209 </option>
+		  <option value="Biology Lab 210">Biology Lab 210 </option>
+		  <option value="Chemistry Lab 211">Chemistry Lab 211 </option>
+		  <option value="Case Study 3  ">Case Study 3 </option>
+		  <option value="Lecture Room 212 ">Lecture Room 212 </option>
+		  <option value="Lecture Room 213 ">Lecture Room 213 </option>
+		  <option value="Lecture Room 214  ">Lecture Room 214 </option>
+		  <option value="Lecture Room 215 ">Lecture Room 215 </option>
+		  <option value="Lecture Room 216  ">Lecture Room 216 </option>
+		  <option value="Lecture Room 217 ">Lecture Room 217 </option>
+		  <option value="Lecture Room 218 ">Lecture Room 218 </option>
+		  <option value="Lecture Room 220 ">Lecture Room 220 </option>
+		  <option value="Lecture Room 221 ">Lecture Room 221 </option>
+		  <option value="Lecture Room 222  ">Lecture Room 222 </option>
+		  <option value="Lecture Room 223  ">Lecture Room 223 </option>
+		  <option value=" "> </option>
+        `;
+      } else if (floor === '3') {
+        initialLocationDropdown.innerHTML = `
+          <option value=" "> </option>
+          <option value="Technical Section"> Technical Section </option>
+          <option value=" Dry Pantry"> Dry Pantry </option>
+          <option value="GSR-2 "> GSR-2 </option>
+          <option value="GSR-1 "> GSR-1</option>
+          <option value=" Game Devt Computer Lab 301 "> Game Devt Computer Lab 301</option>
+          <option value="MAC LAB 302 "> MAC LAB 302</option>
+          <option value="Lecture Room 303 "> Lecture Room 303</option>
+          <option value="lecture Room 304 "> lecture Room 304</option>
+          <option value="Computer Lab 305 "> Computer Lab 305</option>
+          <option value="Lecture Room 306 "> Lecture Room 306</option>
+          <option value="Computer Lab 307 "> Computer Lab 307</option>
+          <option value="Lecture Room 308 "> Lecture Room 308</option>
+          <option value="AVR 309 "> AVR 309</option>
+          <option value="Library "> Library </option>
+          <option value="Fire Exit 3 "> Fire Exit 3</option>
+          <option value="Fire Exit 4 "> Fire Exit 4</option>
+          <option value="Elevator Lobby "> Elevator Lobby</option>
+          <option value="Storage "> Storage</option>
+          <option value="DOIT Office "> DOIT Office</option>
+          <option value="HP/UniX/Linux Lab 310 "> HP/UniX/Linux Lab 310</option>
+          <option value="Open Lab 311 "> Open Lab 311</option>
+          <option value="Reserach Lab Chair 312 "> Reserach Lab Chair 312</option>
+          <option value=" Research Lab Aimco 313 "> Research Lab Aimco 313</option>
+          <option value="Research Lab Primal 314 "> Research Lab Primal 314</option>
+          <option value="Research Lab ICT 315 "> Research Lab ICT 315</option>
+          <option value="Computer Lab 316 "> Computer Lab 316</option>
+          <option value="Computer Lab 317 "> Computer Lab 317</option>
+          <option value="Computer Lab 318 "> Computer Lab 318</option>
+          <option value="Lecture Room 319 "> Lecture Room 319</option>
+          <option value="Computer Lab 320 "> Computer Lab 320</option>
+          <option value="Computer Lab 321 "> Computer Lab 321</option>
+          <option value="Computer Lab 322 "> Computer Lab 322</option>
+          <option value="Computer Lab 323 "> Computer Lab 323</option>
+          <option value="Lecture Room 324 "> Lecture Room 324</option>
+          <option value="Lecture Room 325 "> Lecture Room 325</option>
+        `;
+      } else if (floor === '4') {
+        initialLocationDropdown.innerHTML = `
+          <option value=" "> </option>
+          <option value=" "> </option>
+          <option value="Elevator Lobby ">Elevator Lobby</option>
+          <option value="PC Hardware Lan 401 ">PC Hardware Lan 401 </option>
+		  <option value="CISCO Lab 402 ">CISCO Lab 402</option>
+          <option value="Skills Lab 403  ">Skills Lab 403 </option>
+		  <option value="Skills Lab 404 ">Skills Lab 404 </option>
+		  <option value="CCESO  ">CCESO  </option>
+		  <option value="PE ">PE </option>
+		  <option value="Computer Lab 405 ">Computer Lab 405</option>
+		  <option value="Computer Lab 406 ">Computer Lab 406</option>
+		  <option value="Computer Lab 407 ">Computer Lab 407 </option>
+		  <option value="Lecture Room 408 ">Lecture Room 408 </option>
+		  <option value="Computer Lab 409 ">Computer Lab 409 </option>
+		  <option value="Lecture Lab 410 ">Lecture Lab 410 </option>
+		  <option value="CISCO Lab 411 ">CISCO Lab 411 </option>
+		  <option value="ILMO ">ILMO </option>
+		  <option value="ILMO STO ">ILMO STO </option>
+		  <option value="Roof Deck ">Roof Deck </option>
+        `;
+      } else if (floor === '5') {
+        initialLocationDropdown.innerHTML = `
+          <option value=" "> </option>
+		  <option value="Elevator Lobby ">Elevator Lobby </option>
+			<option value="Magic lab 501 ">Magic lab 501 </option>
+			<option value="Art Studio 502 ">Art Studio 502 </option>
+			<option value="Magic Lab 503 ">Magic Lab 503 </option>
+			<option value="Lecture Room 504 ">Lecture Room 504 </option>
+			<option value="SMS Faculty ">SMS Faculty </option>
+			<option value="Lecture Room 505  ">Lecture Room 505 </option>
+			<option value="Lecture Room 506 ">Lecture Room 506 </option>
+			<option value="Magic Lab 507 ">Magic Lab 507 </option>
+			<option value="News Room 508 ">News Room 508 </option>
+			<option value="TV Production Studio 509  ">TV Production Studio 509 </option>
+			<option value="Sound Lock ">Sound Lock </option>
+			<option value="Control Room ">Control Room </option>
+			<option value="Radio Production Studio 510 ">Radio Production Studio 510 </option>
+			<option value="Photography Studio 511 ">Photography Studio 511 </option>
+		  <option value=" "> </option>
+        `;
+      } else if (floor === '6') {
+        initialLocationDropdown.innerHTML = `
+          <option value=" "> </option>
+          <option value="Elevator Lobby ">Elevator Lobby </option>
+		  <option value="Toilet Room ">Toilet Room</option>
+		  <option value="Multi-Faith Prayer Room">Multi-Faith Prayer Room </option>
+          <option value="Pantry  ">Pantry </option>
+		  <option value="Accreditation Office  ">Accreditation Office </option>
+		  <option value="Conference Room ">Conference Room </option>
+          <option value="Computer Lab 601 ">Computer Lab 601 </option>
+		  <option value="Drawinhg Lab 602  ">Drawinhg Lab 602 </option>
+		  <option value="Lecture Room 603 ">Lecture Room 603</option>
+          <option value="Lecture Room 604 ">Lecture Room 604 </option>
+		  <option value="Lecture Room 605 ">Lecture Room 605 </option>
+		  <option value="Lecture Room 606 ">Lecture Room 606 </option>
+          <option value="Lecture Room 607 ">Lecture Room 607 </option>
+		  <option value="ISLAM Prayer Room ">ISLAM Prayer Room </option>
+		  <option value="ETYSBM ">ETYSBM </option>
+          <option value="SLHS ">SLHS </option>
+		  <option value="Transient Office ">Transient Office </option>
+        `;
+      }
+	  
+    }
+	
+	  document.addEventListener('click', function() {
+      // Pause the alarm sound when any user interaction occurs
+      document.getElementById('alarmSound').pause();
+  });
+
+    function populateDesiredLocations() {
+      // Placeholder for populating desired locations based on selected floor
+      var floor = document.getElementById('desiredFloorAlarm').value;
+      var desiredLocationDropdown = document.getElementById('desiredLocationAlarm');
+      desiredLocationDropdown.innerHTML = ''; // Clear previous options
+
+      if (floor === 'G') {
+        desiredLocationDropdown.innerHTML = `
+				<option value="Admin Assist">Admin Assist</option>
+				<option value="Admin Office">Admin Office</option>
+				<option value="Book Store">Book Store</option>
+				<option value="Canteen">Canteen</option>
+				<option value="Clinic">Clinic</option>
+				<option value="Elevator Lobby">Elevator Lobby</option>
+				<option value="Student Lounge 1">Student Lounge 1</option>
+				<option value="Student Lounge 2">Student Lounge 2</option>
+				<option value="Hallway">Hallway</option>
+				<option value="Lobby Area">Lobby Area</option>
+				<option value="Orientation Room">Orientation Room</option>
+				<option value="Student Council">Student Council</option>
+				<option value="SOCIP">SOCIP</option>
+				<option value="Registrar">Registrar</option>
+				<option value="Treasury">Treasury</option>
+				<option value="Waiting Area">Waiting Area</option>
+				<option value="Admission">Admission</option>
+				<option value="Multi Purpose">Multi Purpose</option>
+				<option value="Tech Room">Tech Room</option>
+        `;
+      } else if (floor === '2') {
+        desiredLocationDropdown.innerHTML = `
+          <option value=" "> </option>
+          <option value="Transformer Room">Transformer Room</option>
+		  <option value="Computer Lab 201">Computer Lab 201 </option>
+		  <option value="Lecture Room 202">Lecture Room 202 </option>
+		  <option value="Lecture Room 203">Lecture Room 203 </option>
+		  <option value="Lecture Room 204">Lecture Room 204 </option>
+		  <option value="Lecture Room 205">Lecture Room 205 </option>
+		  <option value="Lecture Room 206">Lecture Room 206 </option>
+		  <option value="Lecture Room 207">Lecture Room 207</option>
+		  <option value="Lecture Room 208">Lecture Room 208 </option>
+		  <option value="Physics Lab 209">Physics Lab 209 </option>
+		  <option value="Biology Lab 210">Biology Lab 210 </option>
+		  <option value="Chemistry Lab 211">Chemistry Lab 211 </option>
+		  <option value="Case Study 3">Case Study 3 </option>
+		  <option value="Lecture Room 212">Lecture Room 212 </option>
+		  <option value="Lecture Room 213">Lecture Room 213 </option>
+		  <option value="Lecture Room 214">Lecture Room 214 </option>
+		  <option value="Lecture Room 215">Lecture Room 215 </option>
+		  <option value="Lecture Room 216">Lecture Room 216 </option>
+		  <option value="Lecture Room 217">Lecture Room 217 </option>
+		  <option value="Lecture Room 218">Lecture Room 218 </option>
+		  <option value="Lecture Room 220">Lecture Room 220 </option>
+		  <option value="Lecture Room 221">Lecture Room 221 </option>
+		  <option value="Lecture Room 222">Lecture Room 222 </option>
+		  <option value="Lecture Room 223">Lecture Room 223 </option>
+		  <option value=" "> </option>
+        `;
+      } else if (floor === '3') {
+        desiredLocationDropdown.innerHTML = `
+          <option value="Technical Section"> Technical Section </option>
+          <option value=" Dry Pantry"> Dry Pantry </option>
+          <option value="GSR-2"> GSR-2 </option>
+          <option value="GSR-1"> GSR-1</option>
+          <option value=" Game Devt Computer Lab 301"> Game Devt Computer Lab 301</option>
+          <option value="MAC LAB 302"> MAC LAB 302</option>
+          <option value="Lecture Room 303"> Lecture Room 303</option>
+          <option value="lecture Room 304"> lecture Room 304</option>
+          <option value="Computer Lab 305"> Computer Lab 305</option>
+          <option value="Lecture Room 306"> Lecture Room 306</option>
+          <option value="Computer Lab 307"> Computer Lab 307</option>
+          <option value="Lecture Room 308"> Lecture Room 308</option>
+          <option value="AVR 309"> AVR 309</option>
+          <option value="Library"> Library </option>
+          <option value="Fire Exit 3"> Fire Exit 3</option>
+          <option value="Fire Exit 4"> Fire Exit 4</option>
+          <option value="Elevator Lobby"> Elevator Lobby</option>
+          <option value="Storage"> Storage</option>
+          <option value="DOIT Office"> DOIT Office</option>
+          <option value="HP/UniX/Linux Lab 310"> HP/UniX/Linux Lab 310</option>
+          <option value="Open Lab 311"> Open Lab 311</option>
+          <option value="Reserach Lab Chair 312"> Reserach Lab Chair 312</option>
+          <option value=" Research Lab Aimco 313"> Research Lab Aimco 313</option>
+          <option value="Research Lab Primal 314"> Research Lab Primal 314</option>
+          <option value="Research Lab ICT 315"> Research Lab ICT 315</option>
+          <option value="Computer Lab 316"> Computer Lab 316</option>
+          <option value="Computer Lab 317 "> Computer Lab 317</option>
+          <option value="Computer Lab 318 "> Computer Lab 318</option>
+          <option value="Lecture Room 319 "> Lecture Room 319</option>
+          <option value="Computer Lab 320 "> Computer Lab 320</option>
+          <option value="Computer Lab 321 "> Computer Lab 321</option>
+          <option value="Computer Lab 322 "> Computer Lab 322</option>
+          <option value="Computer Lab 323 "> Computer Lab 323</option>
+          <option value="Lecture Room 324 "> Lecture Room 324</option>
+          <option value="Lecture Room 325 "> Lecture Room 325</option>
+        `;
+      }else if (floor === '4') {
+        desiredLocationDropdown.innerHTML = `
+         <option value=" "> </option>
+          <option value="Elevator Lobby">Elevator Lobby</option>
+          <option value="PC Hardware Lan 401">PC Hardware Lan 401 </option>
+		  <option value="CISCO Lab 402">CISCO Lab 402</option>
+          <option value="Skills Lab 403">Skills Lab 403 </option>
+		  <option value="Skills Lab 404">Skills Lab 404 </option>
+		  <option value="CCESO">CCESO  </option>
+		  <option value="PE">PE </option>
+		  <option value="Computer Lab 405">Computer Lab 405</option>
+		  <option value="Computer Lab 406">Computer Lab 406</option>
+		  <option value="Computer Lab 407">Computer Lab 407 </option>
+		  <option value="Lecture Room 408">Lecture Room 408 </option>
+		  <option value="Computer Lab 409">Computer Lab 409 </option>
+		  <option value="Lecture Lab 410">Lecture Lab 410 </option>
+		  <option value="CISCO Lab 411">CISCO Lab 411 </option>
+		  <option value="ILMO">ILMO </option>
+		  <option value="ILMO STO">ILMO STO </option>
+		  <option value="Roof Deck">Roof Deck </option>
+        `;
+      }else if (floor === '5') {
+        desiredLocationDropdown.innerHTML = `
+          <option value=" "> </option>
+		  <option value="Elevator Lobby">Elevator Lobby </option>
+			<option value="Magic lab 501">Magic lab 501 </option>
+			<option value="Art Studio 502">Art Studio 502 </option>
+			<option value="Magic Lab 503">Magic Lab 503 </option>
+			<option value="Lecture Room 504">Lecture Room 504 </option>
+			<option value="SMS Faculty">SMS Faculty </option>
+			<option value="Lecture Room 505">Lecture Room 505 </option>
+			<option value="Lecture Room 506">Lecture Room 506 </option>
+			<option value="Magic Lab 507">Magic Lab 507 </option>
+			<option value="News Room 508">News Room 508 </option>
+			<option value="TV Production Studio 509">TV Production Studio 509 </option>
+			<option value="Sound Lock">Sound Lock </option>
+			<option value="Control Room">Control Room </option>
+			<option value="Radio Production Studio 510">Radio Production Studio 510 </option>
+			<option value="Photography Studio 511">Photography Studio 511 </option>
+		  <option value=" "> </option>
+        `;
+      } else if (floor === '6') {
+        desiredLocationDropdown.innerHTML = `
+           <option value=" "> </option>
+          <option value="Elevator Lobby">Elevator Lobby </option>
+		  <option value="Toilet Room">Toilet Room</option>
+		  <option value="Multi-Faith Prayer Room">Multi-Faith Prayer Room </option>
+          <option value="Pantry">Pantry </option>
+		  <option value="Accreditation Office">Accreditation Office </option>
+		  <option value="Conference Room">Conference Room </option>
+          <option value="Computer Lab 601">Computer Lab 601 </option>
+		  <option value="Drawinhg Lab 602">Drawinhg Lab 602 </option>
+		  <option value="Lecture Room 603">Lecture Room 603</option>
+          <option value="Lecture Room 604">Lecture Room 604 </option>
+		  <option value="Lecture Room 605">Lecture Room 605 </option>
+		  <option value="Lecture Room 606">Lecture Room 606 </option>
+          <option value="Lecture Room 607">Lecture Room 607 </option>
+		  <option value="ISLAM Prayer Room">ISLAM Prayer Room </option>
+		  <option value="ETYSBM">ETYSBM </option>
+          <option value="SLHS">SLHS </option>
+		  <option value="Transient Office">Transient Office </option>
+        `;
+      }
+    }
+
+function setAlarm() {
+    var initialFloor = document.getElementById('initialFloorAlarm').value;
+    var initialLocation = document.getElementById('initialLocationAlarm').value;
+    var desiredFloor = document.getElementById('desiredFloorAlarm').value;
+    var desiredLocation = document.getElementById('desiredLocationAlarm').value;
+    var alarmTime = document.getElementById('alarmTime').value;
+    var selectedDays = [];
+    document.querySelectorAll('input[name="day"]:checked').forEach(function(checkbox) {
+        selectedDays.push(checkbox.value);
+    });
+
+    if (initialFloor.trim() === '' || initialLocation.trim() === '' || desiredFloor.trim() === '' || desiredLocation.trim() === '' || alarmTime.trim() === '' || selectedDays.length === 0) {
+        alert('Please fill all fields and select at least one day for the alarm.');
+        return;
+    }
+
+    var alarmItem = document.createElement('li');
+    alarmItem.classList.add('alarm-item');
+    alarmItem.textContent = `${initialFloor} Floor, ${initialLocation} to ${desiredFloor} Floor, ${desiredLocation} - Alarm at ${alarmTime}, Days: ${selectedDays.join(', ')}`;
+
+    alarmItem.setAttribute('data-initial-floor', initialFloor);
+    alarmItem.setAttribute('data-initial', initialLocation);
+    alarmItem.setAttribute('data-desired-floor', desiredFloor);
+    alarmItem.setAttribute('data-desired', desiredLocation);
+    alarmItem.setAttribute('data-time', alarmTime);
+    alarmItem.setAttribute('data-days', JSON.stringify(selectedDays)); // Store selected days
+
+    var deleteButton = document.createElement('button');
+    deleteButton.classList.add('delete-button');
+    deleteButton.textContent = 'X';
+    deleteButton.onclick = function() {
+        alarmItem.remove();
+        saveAlarms();
+    };
+
+    alarmItem.appendChild(deleteButton);
+	
+		alarmItem.onclick = function() {
+        var initialFloor = alarmItem.getAttribute('data-initial-floor');
+        var initialLocation = alarmItem.getAttribute('data-initial');
+        var desiredFloor = alarmItem.getAttribute('data-desired-floor');
+        var desiredLocation = alarmItem.getAttribute('data-desired');
+
+			/////////////////////////////////////////////////////////////////for data transfer
+          var url = `Main Page.html?initialFloor=${initialFloor}&initial=${initialLocation}&desiredFloor=${desiredFloor}&desired=${desiredLocation} `;
+          window.location.href = url; 
+      };
+		
+    document.getElementById('alarms-list').appendChild(alarmItem);
+
+    // Schedule playing the alarm sound
+    var audio = document.getElementById('alarmSound');
+    var alarmInterval = setInterval(function() {
+        var now = new Date();
+        var currentDay = now.toLocaleDateString('en-US', { weekday: 'long' });
+        var alarmDateTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(),
+            parseInt(alarmTime.split(':')[0]), parseInt(alarmTime.split(':')[1]), 0);
+        if (selectedDays.includes(currentDay) && now.getTime() >= alarmDateTime.getTime()) {
+            clearInterval(alarmInterval);
+            audio.play();
+        }
+    }, 1000);
+
+    // Show popup message if both conditions are met did not use
+    var clickedOnScreen = false;
+    document.addEventListener('click', function() {
+        clickedOnScreen = true;
+        if (!audio.paused && clickedOnScreen) {
+            // Show popup message
+            alert('Alarm activated');
+        }
+    });
+
+    saveAlarms();
+
+    // Clear form fields and checkboxes
+    document.getElementById('initialFloorAlarm').value = '';
+    document.getElementById('initialLocationAlarm').value = '';
+    document.getElementById('desiredFloorAlarm').value = '';
+    document.getElementById('desiredLocationAlarm').value = '';
+    document.getElementById('alarmTime').value = '';
+    document.querySelectorAll('input[name="day"]:checked').forEach(function(checkbox) {
+        checkbox.checked = false;
+    });
+}
+
+
+
+
+
+
+
+////////////////////////////////////////////////////
+	
+    function saveAlarms() {
+      var alarms = document.querySelectorAll('.alarm-item');
+      var alarmsData = [];
+
+      alarms.forEach(function(alarm) {
+        var days = JSON.parse(alarm.getAttribute('data-days')); // Parse stored days
+        var daysString = days.join(', '); // Convert array of days to a comma-separated string
+        alarmsData.push({
+          initialFloor: alarm.getAttribute('data-initial-floor'),
+          initial: alarm.getAttribute('data-initial'),
+          desiredFloor: alarm.getAttribute('data-desired-floor'),
+          desired: alarm.getAttribute('data-desired'),
+          time: alarm.getAttribute('data-time'),
+          days: daysString // Store selected days as a string
+        });
+      });
+
+      localStorage.setItem('alarms', JSON.stringify(alarmsData));
+    }
+	
+	
+	
+	////////////////////////////////////////////////////////////////////////////////
+	
+	
+	
+	function loadAlarms() {
+  var storedAlarms = localStorage.getItem('alarms');
+  
+  if (storedAlarms) {
+    var alarmsData = JSON.parse(storedAlarms);
+
+    alarmsData.forEach(function(alarmData) {
+      var alarmItem = document.createElement('li');
+      alarmItem.classList.add('alarm-item');
+      alarmItem.textContent = `${alarmData.initialFloor} Floor, ${alarmData.initial} to ${alarmData.desiredFloor} Floor, ${alarmData.desired} - Alarm at ${alarmData.time}, Days: ${alarmData.days}`;
+
+      alarmItem.setAttribute('data-initial-floor', alarmData.initialFloor);
+      alarmItem.setAttribute('data-initial', alarmData.initial);
+      alarmItem.setAttribute('data-desired-floor', alarmData.desiredFloor);
+      alarmItem.setAttribute('data-desired', alarmData.desired);
+      alarmItem.setAttribute('data-time', alarmData.time);
+      alarmItem.setAttribute('data-days', alarmData.days);
+
+      var deleteButton = document.createElement('button');
+      deleteButton.classList.add('delete-button');
+      deleteButton.textContent = 'X';
+      deleteButton.onclick = function() {
+        alarmItem.remove();
+        saveAlarms();
+      };
+
+      alarmItem.appendChild(deleteButton);
+      document.getElementById('alarms-list').appendChild(alarmItem);
+    });
+	
+  }
+  
+  
+  
+        var urlParams = new URLSearchParams(window.location.search);
+      var initialFloor = urlParams.get('initialFloor');
+      var initialLocation = urlParams.get('initial');
+      var desiredFloor = urlParams.get('desiredFloor');
+      var desiredLocation = urlParams.get('desired');
+
+      if (initialFloor && initialLocation && desiredFloor && desiredLocation) {
+        document.getElementById('initialFloorBookmark').value = initialFloor;
+        document.getElementById('desiredFloorBookmark').value = desiredFloor;
+        populateInitialLocations();
+        populateDesiredLocations();
+        document.getElementById('initialLocationBookmark').value = initialLocation;
+        document.getElementById('desiredLocationBookmark').value = desiredLocation;
+      }
+}
+
+
+
+
+
+//////////////////////////////////////////////////////////////////
+    function loadAlarm(event) {
+
+	   if (event.target.classList.contains('alarm-item') || event.target.classList.contains('delete-button')) {
+        if (!event.target.classList.contains('delete-button')) {
+          var initialFloor = event.target.getAttribute('data-initial-floor');
+          var initialLocation = event.target.getAttribute('data-initial');
+          var desiredFloor = event.target.getAttribute('data-desired-floor');
+          var desiredLocation = event.target.getAttribute('data-desired');
+          var time = event.target.getAttribute('data-time');
+          var days = JSON.parse(event.target.getAttribute('data-days')); // Parse stored days
+
+          alert(`Alarm set from ${initialFloor} Floor, ${initialLocation} to ${desiredFloor} Floor, ${desiredLocation} at ${time}, Days: ${days.join(', ')}`);
+        }
+
+      }
+    }
+
+    function backToMainPage() {
+      window.location.href = 'Main Page.html';
+    }
+
+    window.addEventListener('load', loadAlarms);
+  </script>
+
+</body>
+</html>
