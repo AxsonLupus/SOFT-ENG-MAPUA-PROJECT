@@ -579,6 +579,50 @@
         floorImage.src = imageSrc;
     }
 
+ 
+		//code that recives the data
+        function loadBookmark() {
+      var urlParams = new URLSearchParams(window.location.search);
+      var initialFloor = urlParams.get('initialFloor');
+      var initialLocation = urlParams.get('initial');
+      var desiredFloor = urlParams.get('desiredFloor');
+      var desiredLocation = urlParams.get('desired');
+
+      if (initialFloor && initialLocation && desiredFloor && desiredLocation) {
+        document.getElementById('initialFloor').value = initialFloor;
+        populateInitialLocations();
+        document.getElementById('desiredFloor').value = desiredFloor;
+        populateDesiredLocations();
+        document.getElementById('initialLocation').value = initialLocation;
+        document.getElementById('desiredLocation').value = desiredLocation;
+      }
+    }
+	
+	
+    function loadAlarm() {
+	const urlParams = new URLSearchParams(window.location.search);
+	const initialFloor = urlParams.get('initialFloor');
+	const initialLocation = urlParams.get('initial');
+	const desiredFloor = urlParams.get('desiredFloor');
+	const desiredLocation = urlParams.get('desired');
+
+      if (initialFloor && initialLocation && desiredFloor && desiredLocation) {
+        document.getElementById('initialFloor').value = initialFloor;
+        populateInitialLocations();
+        document.getElementById('desiredFloor').value = desiredFloor;
+        populateDesiredLocations();
+        document.getElementById('initialLocation').value = initialLocation;
+        document.getElementById('desiredLocation').value = desiredLocation;
+      }
+    }
+	
+	
+	
+    window.addEventListener('load', loadBookmark);
+	
+	
+    window.addEventListener('load', loadAlarm);	
+
 </script>
 </body>
 </html>
